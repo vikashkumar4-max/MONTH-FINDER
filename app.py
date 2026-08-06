@@ -55,9 +55,9 @@ if input_date:
     st.subheader("📊 Summary Metrics")
     col1, col2, col3 = st.columns(3)
     
-    col1.metric(label="Target Date", value=two_years_later.strftime("%d-%b-%Y"))
-    col2.metric(label="Total Days Difference", value=f"{total_days_diff} Days")
-    col3.metric(label="Pending Duration", value=f"{months_remaining}M {days_remaining}D")
+    col1.metric(label="TILL THAN", value=two_years_later.strftime("%d-%b-%Y"))
+    col2.metric(label="TOTAL DAYS", value=f"{total_days_diff} Days")
+    col3.metric(label="TOPUP MONTH", value=f"{months_remaining}M {days_remaining}D")
 
     st.write("")
     
