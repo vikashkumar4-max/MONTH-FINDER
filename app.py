@@ -1,10 +1,10 @@
 import streamlit as st
-from datetime import date
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
 # 1. Page Config
 st.set_page_config(
-    page_title="Date Calculator",
+    page_title="Mratyunjay world",
     page_icon="📅",
     layout="centered"
 )
@@ -116,8 +116,30 @@ st.markdown("""
 # Main Title
 st.title("📅 Date & Month Calculator")
 
-# 1. Input: Plan Expire At
-input_date = st.date_input("📌 Plan Expire At:", value=date(2027, 7, 16))
+# 1. Flexible Input: Any Date Format
+user_date_str = st.text_input(
+    "📌 Plan Expire At:", 
+    value="16-07-2027", 
+    help="You can paste any format e.g. 16-07-2027, 2027/07/16, 16 Jul 2027"
+)
+
+# Supported Date Formats for Auto-detection
+supported_formats = [
+    "%d-%m-%Y", "%d/%m/%Y", "%Y-%m-%d", "%Y/%m/%d",
+    "%d-%b-%Y", "%d %b %Y", "%d-%B-%Y", "%d %B %Y",
+    "%d.%m.%Y", "%Y.%m.%d"
+]
+
+input_date = None
+
+# Parse input string to standard date object
+if user_date_str.strip():
+    for fmt in supported_formats:
+        try:
+            input_date = datetime.strptime(user_date_str.strip(), fmt).date()
+            break
+        except ValueError:
+            pass
 
 today = date.today()
 two_years_later = today + relativedelta(years=2)
@@ -160,7 +182,7 @@ if input_date:
         * **Exact Time Remaining:** **{months_remaining} Months & {days_remaining} Days** (Total: **{total_days_diff} Days**)
         """)
         
-        # New Snowfall Animation Button
+        # Celebration Button
         if st.button("❄️ Celebrate Calculation"):
             st.snow()
     else:
@@ -168,3 +190,19 @@ if input_date:
 
     # 5. Bottom Hindi Tagline
     st.markdown('<div class="guru-line">🔥 "ये बढ़िया था गुरु!" 😎</div>', unsafe_allow_html=True)
+else:
+  st.markdown("""
+    <div style="
+        text-align: center;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #DC2626;
+        margin-top: 25px;
+        padding: 10px;
+        border-radius: 8px;
+        background: #FEF2F2;
+        border: 1.5px dashed #FCA5A5;
+    ">
+        🚨 "अबे DATE सही डालो! अगर टॉप-अप गलत हुआ तो आशीष सर सैलरी से माइनस कर देंगे!" 😱💸
+    </div>
+""", unsafe_allow_html=True)
