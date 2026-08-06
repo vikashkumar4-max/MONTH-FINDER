@@ -192,7 +192,16 @@ if input_date:
     st.markdown('<div class="guru-line">🔥 "ये बढ़िया था गुरु!" 😎</div>', unsafe_allow_html=True)
 else:
   st.markdown("""
-    <div style="
+    <div /* Top Header Toolbar, Edit button, and Footer ko hide karne ke liye */
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+#MainMenu {
+    visibility: hidden;
+}
+footer {
+    visibility: hidden;
+}="
         text-align: center;
         font-size: 0.95rem;
         font-weight: 700;
