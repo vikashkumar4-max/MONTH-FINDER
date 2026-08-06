@@ -4,8 +4,8 @@ from dateutil.relativedelta import relativedelta
 
 # 1. Page Config
 st.set_page_config(
-    page_title="Mratyunjay world",
-    page_icon="📅",
+    page_title="PAPA KA CALANDER",
+    page_icon="😎",
     layout="centered"
 )
 
@@ -114,7 +114,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Main Title
-st.title("📅 Date & Month Calculator")
+st.title("💰 PAPA KA CALANDER")
 
 # 1. Flexible Input: Any Date Format
 user_date_str = st.text_input(
@@ -153,7 +153,7 @@ if input_date:
     st.write("---")
     
     # 2. Header: Result
-    st.subheader("📊 Result")
+    st.subheader("✋🏻🤚🏻 Result")
 
     # 3. Custom Colored Cards (Till Than, Total Days, Topup Month)
     st.markdown(f"""
@@ -176,7 +176,7 @@ if input_date:
     # 4. Result Details Box
     if total_days_diff >= 0:
         st.success(f"""
-        🎯 **Result Details:**
+        🫵🏻 **Result Details:**
         * **Selected Date:** `{input_date.strftime('%d-%b-%Y')}`
         * **Target Date (2 Years):** `{two_years_later.strftime('%d-%b-%Y')}`
         * **Exact Time Remaining:** **{months_remaining} Months & {days_remaining} Days** (Total: **{total_days_diff} Days**)
