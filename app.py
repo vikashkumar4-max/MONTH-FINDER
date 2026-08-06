@@ -1,4 +1,11 @@
 import streamlit as st
+from PIL import Image
+
+# आइकॉन इमेज लोड करें
+icon = Image.open('ICON.PNG')
+
+# पेज कॉन्फिग सेट करें
+st.set_page_config(page_title="Date Calculator", page_icon=icon)
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
