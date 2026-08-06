@@ -25,7 +25,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App Title & Header
-st.title("📅 Date & Month Calculator")
+st.title("⚡VIKAS MONTH FINDER ⚡")
 st.caption("Calculate accurate time differences in days, months, and years.")
 
 # 3. Sidebar Inputs
