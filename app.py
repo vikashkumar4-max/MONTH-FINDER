@@ -261,7 +261,7 @@ st.title("🪙 Topup Calendar")
 
 # 🌟 CLASSIC NAME BADGE (OPTION 1 - Top Subtitle)
 # अपना नाम नीचे बदलें:
-st.markdown('<div class="creator-subtitle">✦ CREATED BY: YOUR NAME HERE ✦</div>', unsafe_allow_html=True)
+st.markdown('<div class="creator-subtitle">✦ 💡 Avoid Salary Cuts With Smart Calendar Tracking ✦</div>', unsafe_allow_html=True)
 
 # Input Field
 user_date_str = st.text_input(
@@ -352,7 +352,7 @@ else:
         if st.button("💸 Shower Money"):
             st.markdown("""
                 <script>
-                const emojis = ['💵', '💸', '💸', '💶💳', '🪙'];
+                const emojis = ['💵', '💸', '💸', '💶', '🪙'];
                 for (let i = 0; i < 40; i++) {
                     let particle = document.createElement('div');
                     particle.className = 'money-particle';
