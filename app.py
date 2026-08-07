@@ -311,7 +311,7 @@ else:
         """)
         
         # Celebration Button
-        if if st.button("📊 Generate Executive Summary"):
+        if st.button("📊 Generate Executive Summary"):
     st.markdown(f"""
     <div style="
         background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
