@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
@@ -38,7 +37,18 @@ st.markdown("""
         letter-spacing: -0.5px;
         text-align: center;
         font-size: 1.75rem !important;
-        margin-bottom: 24px !important;
+        margin-bottom: 4px !important;
+    }
+
+    /* Classic Subtitle / Creator Badge */
+    .creator-subtitle {
+        text-align: center;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 24px;
     }
 
     /* Premium Input Styling */
@@ -185,7 +195,7 @@ st.markdown("""
         letter-spacing: 0.3px;
     }
 
-    /* Elegant Clean Warning Dialog Box */
+    /* Warning Dialog Box */
     .popup-box {
         background: #FFFFFF;
         border: 1px solid #FCA5A5;
@@ -207,6 +217,29 @@ st.markdown("""
         font-weight: 500;
         color: #4B5563;
     }
+
+    /* MONEY RAIN ANIMATION STYLES */
+    @keyframes fall {
+        0% {
+            top: -10%;
+            transform: translateX(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            top: 100%;
+            transform: translateX(100px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    .money-particle {
+        position: fixed;
+        top: -10%;
+        font-size: 2.2rem;
+        z-index: 99999;
+        pointer-events: none;
+        animation: fall 3s linear forwards;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -225,6 +258,10 @@ def show_error_popup():
 
 # Main Title
 st.title("🪙 Topup Calendar")
+
+# 🌟 CLASSIC NAME BADGE (OPTION 1 - Top Subtitle)
+# अपना नाम नीचे बदलें:
+st.markdown('<div class="creator-subtitle">✦ CREATED BY: YOUR NAME HERE ✦</div>', unsafe_allow_html=True)
 
 # Input Field
 user_date_str = st.text_input(
@@ -311,31 +348,26 @@ else:
         * **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
         """)
         
-        # 💸 ONLY MONEY SHOWER BUTTON
+        # 💸 MONEY SHOWER BUTTON
         if st.button("💸 Shower Money"):
-            components.html(
-                """
-                <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+            st.markdown("""
                 <script>
-                    var scalar = 2.5;
-                    var dollar = confetti.shapeFromText({ text: '💵', scalar });
-                    var rupee = confetti.shapeFromText({ text: '💸', scalar });
-                    var bag = confetti.shapeFromText({ text: '💰', scalar });
-
-                    confetti({
-                        shapes: [dollar, rupee, bag],
-                        scalar: 2.2,
-                        particleCount: 45,
-                        spread: 120,
-                        origin: { y: 0.4 }
-                    });
+                const emojis = ['💵', '💸', '💸', '💶💳', '🪙'];
+                for (let i = 0; i < 40; i++) {
+                    let particle = document.createElement('div');
+                    particle.className = 'money-particle';
+                    particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                    particle.style.left = Math.random() * 95 + 'vw';
+                    particle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                    particle.style.animationDelay = (Math.random() * 0.8) + 's';
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 4000);
+                }
                 </script>
-                """,
-                height=0,
-            )
+            """, unsafe_allow_html=True)
 
     else:
         st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
 
-    # Footer Tagline
-    st.markdown('<div class="guru-line">🔥 "ये बढ़िया था गुरु!" 😎</div>', unsafe_allow_html=True)
+    # 🌟 CLASSIC FOOTER SIGNATURE (OPTION 2 - Bottom Footer)
+    st.markdown('<div class="guru-line">🔥 "ये बढ़िया था गुरु!" 😎 | Crafted by <b>Mratyunjay Brahmavanshi</b></div>', unsafe_allow_html=True)
