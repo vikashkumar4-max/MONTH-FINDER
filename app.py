@@ -370,4 +370,4 @@ else:
         st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
 
     # 🌟 CLASSIC FOOTER SIGNATURE (OPTION 2 - Bottom Footer)
-    st.markdown('<div class="guru-line">🔥 "ये बढ़िया था गुरु!" 😎 | Crafted by <b>Mratyunjay Brahmavanshi</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="guru-line">| Crafted by <b>Mratyunjay Brahmavanshi</b></div>', unsafe_allow_html=True)
