@@ -130,7 +130,7 @@ supported_formats = [
     "%d.%m.%Y", "%Y.%m.%d"
 ]
 
-input_date ="na"
+input_date =None
 
 # Parse input string to standard date object
 if user_date_str.strip():
