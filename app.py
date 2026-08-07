@@ -10,19 +10,19 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Custom Classic CSS (Luxurious & Sleek Look)
+# 2. Custom CSS with REAL 3D CARD EFFECTS
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
     
     * {
-        font-family: 'Inter', sans-serif !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
 
-    /* Dark Executive Background */
+    /* Clean Modern Light Background */
     .stApp {
-        background: #0B0F19;
-        color: #E2E8F0;
+        background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+        color: #0F172A;
     }
 
     /* Hide Top Header Toolbar & Footer */
@@ -30,175 +30,187 @@ st.markdown("""
         display: none !important;
     }
 
-    /* Royal Title */
+    /* Title Styling */
     h1 {
-        font-family: 'Cinzel', serif !important;
-        color: #F8FAFC !important;
-        letter-spacing: 2px;
+        color: #0F172A !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.5px;
         text-align: center;
         font-size: 1.8rem !important;
         margin-bottom: 25px !important;
-        text-transform: uppercase;
     }
 
     /* Label Styling */
     label {
-        color: #94A3B8 !important;
-        font-size: 0.8rem !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 600 !important;
+        color: #475569 !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
     }
 
-    /* Classic Input with Inner Shadow & Glow */
+    /* Input Box */
     div[data-baseweb="input"] {
-        border-radius: 8px !important;
-        border: 1px solid #1E293B !important;
-        background: #111827 !important;
+        border-radius: 12px !important;
+        border: 2px solid #E2E8F0 !important;
+        background: #FFFFFF !important;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     
     div[data-baseweb="input"] input {
-        color: #F8FAFC !important;
+        color: #0F172A !important;
+        font-weight: 600 !important;
     }
 
     div[data-baseweb="input"]:focus-within {
-        border-color: #475569 !important;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 12px rgba(255, 255, 255, 0.08) !important;
+        border-color: #6366F1 !important;
+        box-shadow: 0px 0px 16px rgba(99, 102, 241, 0.25) !important;
+        transform: translateY(-1px);
     }
 
-    /* Custom Metric Cards Grid */
+    /* 🔥 3D PERSPECTIVE CONTAINER FOR CARDS */
     .metric-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 12px;
+        gap: 14px;
         margin: 25px 0;
+        perspective: 1000px; /* Gives 3D Depth Perception */
     }
 
-    /* Frosted Glass Card Base */
+    /* 🔥 REAL 3D CARD BASE STYLE */
     .metric-card {
         padding: 18px 12px;
-        border-radius: 12px;
-        background: rgba(17, 24, 39, 0.8);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        background: #FFFFFF;
+        border: 1.5px solid #E2E8F0;
         text-align: center;
-        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
     }
 
-    /* Classic Gold Shimmer Hover Effect */
+    /* 🔥 3D HOVER EFFECT: TILT, LIFT & DEEP SHADOW */
     .metric-card:hover {
-        border-color: rgba(212, 175, 55, 0.45) !important;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.6);
+        transform: translateY(-10px) rotateX(8deg) rotateY(-4deg) scale(1.03);
+        box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 15px -5px rgba(0, 0, 0, 0.08) !important;
+        border-color: #6366F1 !important;
     }
 
     /* Specific Card Color Accents */
-    .card-till-then .metric-title { color: #38BDF8; }
-    .card-till-then .metric-val { color: #F0F9FF; }
+    .card-till-then { border-top: 5px solid #3B82F6; }
+    .card-till-then .metric-title { color: #1D4ED8; }
+    .card-till-then .metric-val { color: #1E40AF; }
 
-    .card-total-days .metric-title { color: #FBBF24; }
-    .card-total-days .metric-val { color: #FFFBEB; }
+    .card-total-days { border-top: 5px solid #F59E0B; }
+    .card-total-days .metric-title { color: #D97706; }
+    .card-total-days .metric-val { color: #B45309; }
 
-    .card-topup-month .metric-title { color: #34D399; }
-    .card-topup-month .metric-val { color: #ECFDF5; }
+    .card-topup-month { border-top: 5px solid #10B981; }
+    .card-topup-month .metric-title { color: #059669; }
+    .card-topup-month .metric-val { color: #047857; }
 
-    /* Special Full Topup Gold Highlight Card */
+    /* Special Full Topup Highlight Card (Royal Gradient 3D) */
     .card-rounded-month {
-        background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%) !important;
-        border: 1px solid rgba(212, 175, 55, 0.5) !important;
-        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.08) !important;
+        background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important;
+        border: none !important;
+        box-shadow: 0 12px 25px rgba(79, 70, 229, 0.35) !important;
     }
-    .card-rounded-month .metric-title { color: #FDE68A !important; }
+    .card-rounded-month .metric-title { color: #E0E7FF !important; }
     .card-rounded-month .metric-val { color: #FFFFFF !important; font-size: 1.25rem !important; }
 
+    .card-rounded-month:hover {
+        box-shadow: 0 25px 35px rgba(79, 70, 229, 0.55) !important;
+    }
+
+    /* 3D Inner Content Depth Effect */
     .metric-title {
-        font-size: 0.68rem;
-        font-weight: 600;
+        font-size: 0.72rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
+        letter-spacing: 0.8px;
         margin-bottom: 6px;
+        transform: translateZ(20px); /* Pushes text forward in 3D */
     }
 
     .metric-val {
         font-size: 1.15rem;
-        font-weight: 700;
+        font-weight: 800;
+        transform: translateZ(30px); /* Pushes number further forward for pop-out feel */
     }
 
     /* Result Details Box */
     .stSuccess {
-        background: #111827 !important;
-        border: 1px solid #1E293B !important;
-        border-left: 4px solid #10B981 !important;
-        border-radius: 8px !important;
-        color: #E2E8F0 !important;
+        background: #FFFFFF !important;
+        border: 1.5px solid #E2E8F0 !important;
+        border-left: 5px solid #10B981 !important;
+        border-radius: 12px !important;
+        color: #1E293B !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
     }
 
-    /* Classic Button with Active Press Effect */
+    /* Button with Active Click Scale Effect */
     .stButton>button {
         width: 100%;
-        border-radius: 8px !important;
-        background: #1E293B !important;
-        color: #F8FAFC !important;
-        border: 1px solid #334155 !important;
-        padding: 10px !important;
-        font-weight: 600 !important;
+        border-radius: 12px !important;
+        background: linear-gradient(90deg, #2563EB 0%, #1D4ED8 100%) !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        padding: 12px !important;
+        font-weight: 700 !important;
         letter-spacing: 0.5px;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25) !important;
         transition: all 0.2s ease !important;
     }
 
     .stButton>button:hover {
-        background: #334155 !important;
-        border-color: #64748B !important;
-        color: #FFFFFF !important;
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4) !important;
     }
 
     .stButton>button:active {
-        transform: scale(0.98) !important;
-        background: #0F172A !important;
+        transform: scale(0.97) !important;
     }
 
-    /* Classic Minimal Tagline */
+    /* Tagline Badge */
     .guru-line {
         text-align: center;
-        font-family: 'Cinzel', serif !important;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #CBD5E1;
-        margin-top: 30px;
+        font-size: 1rem;
+        font-weight: 800;
+        color: #4338CA;
+        margin-top: 25px;
         padding: 12px;
-        border-radius: 8px;
-        background: #111827;
-        border: 1px solid #1E293B;
-        letter-spacing: 1px;
+        border-radius: 50px;
+        background: #EEF2FF;
+        border: 1px solid #C7D2FE;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
     }
 
-    /* Unique Animated Error Popup Style */
+    /* Animated Error Popup Style */
     .popup-box {
-        background: #1E1010;
-        border: 1.5px dashed #EF4444;
+        background: #FEF2F2;
+        border: 2px dashed #EF4444;
         padding: 20px;
         border-radius: 12px;
         text-align: center;
-        box-shadow: 0px 8px 25px rgba(239, 68, 68, 0.2);
+        box-shadow: 0px 8px 25px rgba(239, 68, 68, 0.15);
     }
 
     .popup-header {
         font-size: 1.3rem;
         font-weight: 800;
-        color: #FCA5A5;
+        color: #991B1B;
         margin-bottom: 8px;
     }
 
     .popup-sub {
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: #FECACA;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #7F1D1D;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# 3. Popup Function using Native Streamlit Dialog
+# 3. Native Streamlit Popup Dialog
 @st.dialog("🚨 Warning!")
 def show_error_popup():
     st.markdown("""
@@ -243,7 +255,6 @@ two_years_later = today + relativedelta(years=2)
 
 # Calculation & Logic Handling
 if input_date is None:
-    # Trigger Popup Dialog automatically on wrong input
     show_error_popup()
     st.error("🚨 अमान्य तारीख (Invalid Date)! कृपया सही Format दर्ज करें।")
 
