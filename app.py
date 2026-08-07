@@ -184,7 +184,7 @@ if input_date:
         
         # Celebration Button
         if st.button("❄️ Celebrate Calculation"):
-            st.FIRE()
+            st.fire()
     else:
         st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
 
