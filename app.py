@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Rich Executive SaaS Dashboard CSS
+# 2. Custom Executive Light & Sleek Dashboard CSS
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -87,7 +87,7 @@ st.markdown("""
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    /* Subtle & Professional Hover (No Chhapri 3D Tilt) */
+    /* Subtle & Professional Hover */
     .metric-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
@@ -107,7 +107,7 @@ st.markdown("""
     .card-topup-month .metric-title { color: #059669; }
     .card-topup-month .metric-val { color: #064E3B; }
 
-    /* Rich Midnight Emerald Card (Main Highlight) */
+    /* Rich Obsidian Card (Main Highlight) */
     .card-rounded-month {
         background: #0F172A !important;
         border: 1px solid #1E293B !important;
@@ -215,11 +215,11 @@ def show_error_popup():
     st.markdown("""
         <div class="popup-box">
             <div class="popup-header">🦁 वाह मेरे शेर! कर दिया गलत टॉपअप! 👏🤡</div>
-            <div class="popup-sub">"अबे DATE सही डालो भाई! " </div>
+            <div class="popup-sub">"अबे DATE सही डालो भाई!" </div>
         </div>
     """, unsafe_allow_html=True)
     st.write("")
-    if st.button("Sorry 🙏🏻 (बेइज़्ज़ती करवा ली।)", use_container_width=True):
+    if st.button("Sorry 🙏🏻 (close)", use_container_width=True):
         st.rerun()
 
 # Main Title
@@ -229,7 +229,7 @@ st.title("🪙 Topup Calendar")
 user_date_str = st.text_input(
     "📌 Plan Expire At:", 
     value="16-07-2027", 
-    help="ONLY PASTE DATE DOSEN'T MATTER FORMET"
+    help="You can paste any format e.g. 16-07-2027, 2027/07/16, 16 Jul 2027"
 )
 
 supported_formats = [
@@ -255,7 +255,7 @@ two_years_later = today + relativedelta(years=2)
 # Calculation & Logic Handling
 if input_date is None:
     show_error_popup()
-    st.error("🚨 PLEASE PASTE DATE CAREFULLY ISSE AAPKI SALARY BHI KAT SKTI HAI ")
+    st.error("🚨 Please paste date carefully 100% SALARY CUT CHANCE AVAILABLE ")
 
 else:
     total_days_diff = (two_years_later - input_date).days
@@ -310,34 +310,35 @@ else:
         * **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
         """)
         
-        # Celebration Button
+        # Executive Summary Generator Button
         if st.button("📊 Generate Executive Summary"):
-    st.markdown(f"""
-    <div style="
-        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-        border: 1px solid #334155;
-        border-left: 5px solid #10B981;
-        padding: 20px;
-        border-radius: 12px;
-        color: #F8FAFC;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        margin-top: 15px;
-    ">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
-            <span style="font-size: 0.85rem; font-weight: 700; color: #94A3B8; letter-spacing: 1px; text-transform: uppercase;">TOPUP SUMMARY REPORT</span>
-            <span style="font-size: 0.75rem; background: #10B981; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: 700;">VERIFIED</span>
-        </div>
-        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">
-            📅 Target Date: <span style="color: #38BDF8;">{two_years_later.strftime('%d %b %Y')}</span>
-        </div>
-        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">
-            ⏳ Exact Time Left: <span style="color: #FBBF24;">{display_month_str}</span> ({total_days_diff} Days)
-        </div>
-        <div style="font-size: 1.25rem; font-weight: 800; color: #34D399; margin-top: 10px;">
-            💳 Required Topup: {final_rounded_months} Full Months
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+            st.markdown(f"""
+            <div style="
+                background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+                border: 1px solid #334155;
+                border-left: 5px solid #10B981;
+                padding: 20px;
+                border-radius: 12px;
+                color: #F8FAFC;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+                margin-top: 15px;
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+                    <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 1px; text-transform: uppercase;">TOPUP SUMMARY REPORT</span>
+                    <span style="font-size: 0.7rem; background: #10B981; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: 700;">VERIFIED</span>
+                </div>
+                <div style="font-size: 1rem; font-weight: 600; margin-bottom: 6px;">
+                    📅 Target Date: <span style="color: #38BDF8;">{two_years_later.strftime('%d %b %Y')}</span>
+                </div>
+                <div style="font-size: 1rem; font-weight: 600; margin-bottom: 6px;">
+                    ⏳ Exact Time Left: <span style="color: #FBBF24;">{display_month_str}</span> ({total_days_diff} Days)
+                </div>
+                <div style="font-size: 1.15rem; font-weight: 800; color: #34D399; margin-top: 10px;">
+                    💳 Required Topup: {final_rounded_months} Full Months
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
     else:
         st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
 
