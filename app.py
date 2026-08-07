@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 # 1. Page Config
 st.set_page_config(
     page_title="PAPA CALANDER",
-    page_icon="🖕👨🏻‍🦰",
+    page_icon="👨🏻‍🦰",
     layout="centered"
 )
 
@@ -114,7 +114,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Main Title
-st.title("💰 PAPA KA CALANDER")
+st.title("💰Topup Calander ")
 
 # 1. Flexible Input: Any Date Format
 user_date_str = st.text_input(
@@ -130,7 +130,7 @@ supported_formats = [
     "%d.%m.%Y", "%Y.%m.%d"
 ]
 
-input_date = None
+input_date = please paste date here 
 
 # Parse input string to standard date object
 if user_date_str.strip():
