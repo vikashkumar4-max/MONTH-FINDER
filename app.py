@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 
 # 1. Page Config
 st.set_page_config(
-    page_title="PAPA CALENDAR - Topup Calculator 💰",
+    page_title="PAPA CALENDAR ",
     page_icon="👨🏻‍🦰",
     layout="centered",
     initial_sidebar_state="collapsed"
@@ -215,21 +215,21 @@ def show_error_popup():
     st.markdown("""
         <div class="popup-box">
             <div class="popup-header">🦁 वाह मेरे शेर! कर दिया गलत टॉपअप! 👏🤡</div>
-            <div class="popup-sub">"अबे DATE सही डालो भाई! गलत तारीख डालकर क्या साबित करना चाहते हो?" 💸😱</div>
+            <div class="popup-sub">"अबे DATE सही डालो भाई! " </div>
         </div>
     """, unsafe_allow_html=True)
     st.write("")
-    if st.button("गलती मान ली 🙏🏻 (बंद करें)", use_container_width=True):
+    if st.button("Sorry 🙏🏻 (बेइज़्ज़ती करवा ली।)", use_container_width=True):
         st.rerun()
 
 # Main Title
-st.title("💰 Topup Calendar")
+st.title("🪙 Topup Calendar")
 
 # Input Field
 user_date_str = st.text_input(
     "📌 Plan Expire At:", 
     value="16-07-2027", 
-    help="You can paste any format e.g. 16-07-2027, 2027/07/16, 16 Jul 2027"
+    help="ONLY PASTE DATE DOSEN'T MATTER FORMET"
 )
 
 supported_formats = [
@@ -255,7 +255,7 @@ two_years_later = today + relativedelta(years=2)
 # Calculation & Logic Handling
 if input_date is None:
     show_error_popup()
-    st.error("🚨 अमान्य तारीख (Invalid Date)! कृपया सही Format दर्ज करें।")
+    st.error("🚨 PLEASE PASTE DATE CAREFULLY ISSE AAPKI SALARY BHI KAT SKTI HAI ")
 
 else:
     total_days_diff = (two_years_later - input_date).days
@@ -311,8 +311,33 @@ else:
         """)
         
         # Celebration Button
-        if st.button("❄️ Celebrate Calculation"):
-            st.snow()
+        if if st.button("📊 Generate Executive Summary"):
+    st.markdown(f"""
+    <div style="
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        border: 1px solid #334155;
+        border-left: 5px solid #10B981;
+        padding: 20px;
+        border-radius: 12px;
+        color: #F8FAFC;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        margin-top: 15px;
+    ">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            <span style="font-size: 0.85rem; font-weight: 700; color: #94A3B8; letter-spacing: 1px; text-transform: uppercase;">TOPUP SUMMARY REPORT</span>
+            <span style="font-size: 0.75rem; background: #10B981; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: 700;">VERIFIED</span>
+        </div>
+        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">
+            📅 Target Date: <span style="color: #38BDF8;">{two_years_later.strftime('%d %b %Y')}</span>
+        </div>
+        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">
+            ⏳ Exact Time Left: <span style="color: #FBBF24;">{display_month_str}</span> ({total_days_diff} Days)
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #34D399; margin-top: 10px;">
+            💳 Required Topup: {final_rounded_months} Full Months
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     else:
         st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
 
