@@ -1,10 +1,11 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
 # 1. Page Config
 st.set_page_config(
-    page_title="PAPA CALENDAR ",
+    page_title="PAPA CALENDAR",
     page_icon="👨🏻‍🦰",
     layout="centered",
     initial_sidebar_state="collapsed"
@@ -310,8 +311,31 @@ else:
         * **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
         """)
         
-        # Executive Summary Generator Button
-        if st.button("📊 Generate Executive Summary"):
+        # 💸 Money Shower & Summary Generator Button
+        if st.button("💸 Shower Money & Show Executive Summary"):
+            # Trigger JS Money Shower
+            components.html(
+                """
+                <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+                <script>
+                    var scalar = 2.5;
+                    var dollar = confetti.shapeFromText({ text: '💵', scalar });
+                    var rupee = confetti.shapeFromText({ text: '💸', scalar });
+                    var bag = confetti.shapeFromText({ text: '💰', scalar });
+
+                    confetti({
+                        shapes: [dollar, rupee, bag],
+                        scalar: 2.2,
+                        particleCount: 45,
+                        spread: 120,
+                        origin: { y: 0.4 }
+                    });
+                </script>
+                """,
+                height=0,
+            )
+
+            # Show Executive Summary Card
             st.markdown(f"""
             <div style="
                 background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
