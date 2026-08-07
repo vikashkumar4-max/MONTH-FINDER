@@ -139,13 +139,13 @@ st.markdown("""
 @st.dialog("🚨 Warning!")
 def show_error_popup():
     st.markdown("""
-        <div class="popup-box">
+        <div class="popup-round">
             <div class="popup-header">🦁 वाह मेरे शेर! कर दिया गलत टॉपअप! 👏🤡</div>
-            <div class="popup-sub">"अबे DATE सही डालो भाई! गलत तारीख डालकर क्या साबित करना चाहते हो?" 💸😱</div>
+            <div class="popup-sub">"अबे DATE सही डालो भाई!" 💸😱</div>
         </div>
     """, unsafe_allow_html=True)
     st.write("")
-    if st.button("गलती मान ली 🙏🏻 (बंद करें)", use_container_width=True):
+    if st.button("Sorry 🙏🏻 (बेइज़्ज़ती करवा ली।)", use_container_width=True):
         st.rerun()
 
 # Main Title
@@ -184,7 +184,7 @@ if input_date is None:
     show_error_popup()
     
     # Inline subtle warning in case popup is closed
-    st.error("🚨 अमान्य तारीख (Invalid Date)! कृपया सही Format दर्ज करें।")
+    st.error("🚨 Please paste carefully it's was wrong ")
 
 else:
     # Calculations
