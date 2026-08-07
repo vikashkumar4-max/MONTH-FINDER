@@ -13,128 +13,161 @@ st.set_page_config(
 # 2. Custom CSS
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
     
-    html, body, [class*="css"] {
-        font-family: 'Poppins', sans-serif;
+    * {
+        font-family: 'Inter', sans-serif !important;
     }
 
-    /* Hide Top Header Toolbar, Edit button, and Footer */
-    header[data-testid="stHeader"] {
+    /* Classic Slate/Navy Background */
+    .stApp {
+        background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+        color: #F8FAFC;
+    }
+
+    /* Hide Unnecessary Streamlit Elements */
+    header[data-testid="stHeader"], #MainMenu, footer {
         display: none !important;
     }
-    #MainMenu {
-        visibility: hidden;
-    }
-    footer {
-        visibility: hidden;
-    }
 
-    /* Overall Title & Subtitle Styling */
+    /* Classic Royal Title */
     h1 {
-        font-size: 1.5rem !important;
+        font-family: 'Cinzel', serif !important;
+        color: #F1F5F9 !important;
         font-weight: 700 !important;
-        color: #1E293B !important;
-    }
-    
-    h2, h3 {
-        font-size: 1.15rem !important;
-        font-weight: 600 !important;
-        margin-bottom: 8px !important;
-    }
-
-    label {
-        font-size: 0.85rem !important;
-        font-weight: 600 !important;
-        color: #334155 !important;
-    }
-
-    /* Custom Metric Cards */
-    .metric-container {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-        margin-bottom: 18px;
-        flex-wrap: wrap;
-    }
-    
-    .metric-card {
-        flex: 1;
-        min-width: 130px;
-        padding: 10px 12px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        font-size: 1.9rem !important;
+        letter-spacing: 2px;
         text-align: center;
+        margin-bottom: 25px !important;
+        text-transform: uppercase;
     }
 
-    /* Card Themes */
-    .card-till-then { background-color: #EFF6FF; border: 1px solid #BFDBFE; }
-    .card-till-then .metric-title { color: #1E40AF; }
-    .card-till-then .metric-val { color: #1D4ED8; }
+    /* Input Box Minimal Classic Style */
+    label {
+        color: #94A3B8 !important;
+        font-size: 0.8rem !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 
-    .card-total-days { background-color: #FEF3C7; border: 1px solid #FDE68A; }
-    .card-total-days .metric-title { color: #92400E; }
-    .card-total-days .metric-val { color: #B45309; }
+    div[data-baseweb="input"] {
+        border-radius: 8px !important;
+        border: 1px solid #334155 !important;
+        background: #1E293B !important;
+        color: #F8FAFC !important;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.3s ease;
+    }
+    
+    div[data-baseweb="input"] input {
+        color: #F8FAFC !important;
+    }
 
-    .card-topup-month { background-color: #F0FDF4; border: 1px solid #BBF7D0; }
-    .card-topup-month .metric-title { color: #166534; }
-    .card-topup-month .metric-val { color: #15803D; }
+    div[data-baseweb="input"]:focus-within {
+        border-color: #CBD5E1 !important;
+        box-shadow: 0px 0px 10px rgba(241, 245, 249, 0.15) !important;
+    }
 
-    .card-rounded-month { background-color: #F5F3FF; border: 1px solid #DDD6FE; }
-    .card-rounded-month .metric-title { color: #5B21B6; }
-    .card-rounded-month .metric-val { color: #6D28D9; }
+    /* Card Container Grid */
+    .metric-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 12px;
+        margin: 25px 0;
+    }
+
+    /* Classic Card Style */
+    .metric-card {
+        padding: 18px 12px;
+        border-radius: 10px;
+        background: #1E293B;
+        border: 1px solid #334155;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .metric-card:hover {
+        border-color: #64748B;
+        transform: translateY(-2px);
+    }
+
+    /* Dynamic Classic Themes */
+    .card-till-then .metric-title { color: #38BDF8; }
+    .card-till-then .metric-val { color: #F0F9FF; }
+
+    .card-total-days .metric-title { color: #FBBF24; }
+    .card-total-days .metric-val { color: #FFFBEB; }
+
+    .card-topup-month .metric-title { color: #34D399; }
+    .card-topup-month .metric-val { color: #ECFDF5; }
+
+    /* Classic Gold/Platinum Accent Card */
+    .card-rounded-month {
+        background: linear-gradient(135deg, #334155 0%, #1E293B 100%) !important;
+        border: 1px solid #94A3B8 !important;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05) !important;
+    }
+    .card-rounded-month .metric-title { color: #E2E8F0 !important; }
+    .card-rounded-month .metric-val { color: #FFFFFF !important; font-size: 1.25rem !important; }
 
     .metric-title {
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 2px;
+        letter-spacing: 1.2px;
+        margin-bottom: 6px;
     }
 
     .metric-val {
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         font-weight: 700;
     }
 
-    /* Unique Animated Error Popup Style */
-    .popup-box {
-        background: linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%);
-        border: 2px dashed #E53E3E;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0px 8px 20px rgba(229, 62, 62, 0.2);
-        animation: pulse 1.5s infinite alternate;
+    /* Result Details Box (Dark Glass) */
+    .stSuccess {
+        background: #1E293B !important;
+        border: 1px solid #334155 !important;
+        border-left: 4px solid #10B981 !important;
+        border-radius: 8px !important;
+        color: #E2E8F0 !important;
     }
 
-    .popup-header {
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: #C53030;
-        margin-bottom: 8px;
+    /* Classic Button */
+    .stButton>button {
+        width: 100%;
+        border-radius: 8px !important;
+        background: #334155 !important;
+        color: #F8FAFC !important;
+        font-weight: 600 !important;
+        border: 1px solid #475569 !important;
+        padding: 10px !important;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stButton>button:hover {
+        background: #475569 !important;
+        border-color: #94A3B8 !important;
+        color: #FFFFFF !important;
     }
 
-    .popup-sub {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #742A2A;
-    }
-
+    /* Classic Minimal Tagline */
     .guru-line {
         text-align: center;
-        font-size: 1rem;
-        font-weight: 700;
-        color: #4F46E5;
-        margin-top: 25px;
-        padding: 8px;
-        border-radius: 8px;
-        background: #EEF2FF;
-        border: 1px dashed #C7D2FE;
+        font-family: 'Cinzel', serif !important;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #CBD5E1;
+        margin-top: 30px;
+        padding: 10px;
+        border-radius: 6px;
+        background: #1E293B;
+        border: 1px solid #334155;
+        letter-spacing: 1px;
     }
     </style>
 """, unsafe_allow_html=True)
-
 # 3. Popup Function using Native Streamlit Dialog
 @st.dialog("🚨 Warning!")
 def show_error_popup():
