@@ -311,9 +311,8 @@ else:
         * **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
         """)
         
-        # 💸 Money Shower & Summary Generator Button
-        if st.button("💸 Shower Money & Show Executive Summary"):
-            # Trigger JS Money Shower
+        # 💸 ONLY MONEY SHOWER BUTTON
+        if st.button("💸 Shower Money"):
             components.html(
                 """
                 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -334,34 +333,6 @@ else:
                 """,
                 height=0,
             )
-
-            # Show Executive Summary Card
-            st.markdown(f"""
-            <div style="
-                background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-                border: 1px solid #334155;
-                border-left: 5px solid #10B981;
-                padding: 20px;
-                border-radius: 12px;
-                color: #F8FAFC;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-                margin-top: 15px;
-            ">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
-                    <span style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; letter-spacing: 1px; text-transform: uppercase;">TOPUP SUMMARY REPORT</span>
-                    <span style="font-size: 0.7rem; background: #10B981; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: 700;">VERIFIED</span>
-                </div>
-                <div style="font-size: 1rem; font-weight: 600; margin-bottom: 6px;">
-                    📅 Target Date: <span style="color: #38BDF8;">{two_years_later.strftime('%d %b %Y')}</span>
-                </div>
-                <div style="font-size: 1rem; font-weight: 600; margin-bottom: 6px;">
-                    ⏳ Exact Time Left: <span style="color: #FBBF24;">{display_month_str}</span> ({total_days_diff} Days)
-                </div>
-                <div style="font-size: 1.15rem; font-weight: 800; color: #34D399; margin-top: 10px;">
-                    💳 Required Topup: {final_rounded_months} Full Months
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
 
     else:
         st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
