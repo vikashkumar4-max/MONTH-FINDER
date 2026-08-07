@@ -10,18 +10,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Custom CSS with REAL 3D CARD EFFECTS
+# 2. Rich Executive SaaS Dashboard CSS
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
     * {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
-    /* Clean Modern Light Background */
+    /* Subtle Rich Minimal Background */
     .stApp {
-        background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+        background: #F8FAFC;
         color: #0F172A;
     }
 
@@ -30,182 +30,181 @@ st.markdown("""
         display: none !important;
     }
 
-    /* Title Styling */
+    /* Executive Clean Title */
     h1 {
         color: #0F172A !important;
         font-weight: 800 !important;
         letter-spacing: -0.5px;
         text-align: center;
-        font-size: 1.8rem !important;
-        margin-bottom: 25px !important;
+        font-size: 1.75rem !important;
+        margin-bottom: 24px !important;
     }
 
-    /* Label Styling */
+    /* Premium Input Styling */
     label {
-        color: #475569 !important;
-        font-size: 0.85rem !important;
+        color: #64748B !important;
+        font-size: 0.75rem !important;
         font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
     }
 
-    /* Input Box */
     div[data-baseweb="input"] {
-        border-radius: 12px !important;
-        border: 2px solid #E2E8F0 !important;
+        border-radius: 10px !important;
+        border: 1px solid #E2E8F0 !important;
         background: #FFFFFF !important;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03) !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0px 1px 3px rgba(15, 23, 42, 0.05) !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
     }
     
     div[data-baseweb="input"] input {
         color: #0F172A !important;
         font-weight: 600 !important;
+        font-size: 0.95rem !important;
     }
 
     div[data-baseweb="input"]:focus-within {
-        border-color: #6366F1 !important;
-        box-shadow: 0px 0px 16px rgba(99, 102, 241, 0.25) !important;
-        transform: translateY(-1px);
+        border-color: #0F172A !important;
+        box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08) !important;
     }
 
-    /* 🔥 3D PERSPECTIVE CONTAINER FOR CARDS */
+    /* Metric Cards Grid Layout */
     .metric-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 14px;
-        margin: 25px 0;
-        perspective: 1000px; /* Gives 3D Depth Perception */
+        grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+        gap: 12px;
+        margin: 20px 0;
     }
 
-    /* 🔥 REAL 3D CARD BASE STYLE */
+    /* Executive Classic Card Style */
     .metric-card {
-        padding: 18px 12px;
-        border-radius: 16px;
+        padding: 20px 14px;
+        border-radius: 12px;
         background: #FFFFFF;
-        border: 1.5px solid #E2E8F0;
+        border: 1px solid #E2E8F0;
         text-align: center;
-        transform-style: preserve-3d;
-        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    /* 🔥 3D HOVER EFFECT: TILT, LIFT & DEEP SHADOW */
+    /* Subtle & Professional Hover (No Chhapri 3D Tilt) */
     .metric-card:hover {
-        transform: translateY(-10px) rotateX(8deg) rotateY(-4deg) scale(1.03);
-        box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 15px -5px rgba(0, 0, 0, 0.08) !important;
-        border-color: #6366F1 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+        border-color: #CBD5E1;
     }
 
-    /* Specific Card Color Accents */
-    .card-till-then { border-top: 5px solid #3B82F6; }
-    .card-till-then .metric-title { color: #1D4ED8; }
-    .card-till-then .metric-val { color: #1E40AF; }
+    /* Distinct Executive Card Colors */
+    .card-till-then { border-top: 3px solid #2563EB; }
+    .card-till-then .metric-title { color: #2563EB; }
+    .card-till-then .metric-val { color: #1E3A8A; }
 
-    .card-total-days { border-top: 5px solid #F59E0B; }
+    .card-total-days { border-top: 3px solid #D97706; }
     .card-total-days .metric-title { color: #D97706; }
-    .card-total-days .metric-val { color: #B45309; }
+    .card-total-days .metric-val { color: #78350F; }
 
-    .card-topup-month { border-top: 5px solid #10B981; }
+    .card-topup-month { border-top: 3px solid #059669; }
     .card-topup-month .metric-title { color: #059669; }
-    .card-topup-month .metric-val { color: #047857; }
+    .card-topup-month .metric-val { color: #064E3B; }
 
-    /* Special Full Topup Highlight Card (Royal Gradient 3D) */
+    /* Rich Midnight Emerald Card (Main Highlight) */
     .card-rounded-month {
-        background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important;
-        border: none !important;
-        box-shadow: 0 12px 25px rgba(79, 70, 229, 0.35) !important;
+        background: #0F172A !important;
+        border: 1px solid #1E293B !important;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15) !important;
     }
-    .card-rounded-month .metric-title { color: #E0E7FF !important; }
-    .card-rounded-month .metric-val { color: #FFFFFF !important; font-size: 1.25rem !important; }
+    .card-rounded-month .metric-title { color: #94A3B8 !important; }
+    .card-rounded-month .metric-val { color: #F8FAFC !important; font-size: 1.25rem !important; }
 
     .card-rounded-month:hover {
-        box-shadow: 0 25px 35px rgba(79, 70, 229, 0.55) !important;
+        border-color: #334155 !important;
+        box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.25) !important;
     }
 
-    /* 3D Inner Content Depth Effect */
     .metric-title {
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        margin-bottom: 6px;
-        transform: translateZ(20px); /* Pushes text forward in 3D */
+        margin-bottom: 8px;
     }
 
     .metric-val {
         font-size: 1.15rem;
         font-weight: 800;
-        transform: translateZ(30px); /* Pushes number further forward for pop-out feel */
+        letter-spacing: -0.3px;
     }
 
-    /* Result Details Box */
+    /* Result Box (Clean Executive Slate) */
     .stSuccess {
         background: #FFFFFF !important;
-        border: 1.5px solid #E2E8F0 !important;
-        border-left: 5px solid #10B981 !important;
-        border-radius: 12px !important;
-        color: #1E293B !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+        border: 1px solid #E2E8F0 !important;
+        border-left: 4px solid #0F172A !important;
+        border-radius: 10px !important;
+        color: #334155 !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+        padding: 16px !important;
     }
 
-    /* Button with Active Click Scale Effect */
+    /* Crisp Minimal Button */
     .stButton>button {
         width: 100%;
-        border-radius: 12px !important;
-        background: linear-gradient(90deg, #2563EB 0%, #1D4ED8 100%) !important;
+        border-radius: 10px !important;
+        background: #0F172A !important;
         color: #FFFFFF !important;
-        border: none !important;
-        padding: 12px !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.5px;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25) !important;
+        border: 1px solid #0F172A !important;
+        padding: 10px 16px !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
         transition: all 0.2s ease !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     }
 
     .stButton>button:hover {
-        transform: translateY(-2px) scale(1.01);
-        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4) !important;
+        background: #1E293B !important;
+        border-color: #1E293B !important;
+        color: #FFFFFF !important;
     }
 
     .stButton>button:active {
-        transform: scale(0.97) !important;
+        transform: scale(0.99) !important;
     }
 
-    /* Tagline Badge */
+    /* Minimal Tagline Badge */
     .guru-line {
         text-align: center;
-        font-size: 1rem;
-        font-weight: 800;
-        color: #4338CA;
-        margin-top: 25px;
-        padding: 12px;
-        border-radius: 50px;
-        background: #EEF2FF;
-        border: 1px solid #C7D2FE;
-        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #475569;
+        margin-top: 24px;
+        padding: 10px;
+        border-radius: 8px;
+        background: #F1F5F9;
+        border: 1px solid #E2E8F0;
+        letter-spacing: 0.3px;
     }
 
-    /* Animated Error Popup Style */
+    /* Elegant Clean Warning Dialog Box */
     .popup-box {
-        background: #FEF2F2;
-        border: 2px dashed #EF4444;
-        padding: 20px;
-        border-radius: 12px;
+        background: #FFFFFF;
+        border: 1px solid #FCA5A5;
+        border-top: 4px solid #DC2626;
+        padding: 18px;
+        border-radius: 8px;
         text-align: center;
-        box-shadow: 0px 8px 25px rgba(239, 68, 68, 0.15);
     }
 
     .popup-header {
-        font-size: 1.3rem;
+        font-size: 1.15rem;
         font-weight: 800;
         color: #991B1B;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
     .popup-sub {
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: #7F1D1D;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #4B5563;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -278,7 +277,6 @@ else:
         rounded_month_str = "N/A"
 
     st.write("---")
-    st.subheader("✋🏻🤚🏻 Result")
 
     # Metric Cards Layout
     st.markdown(f"""
