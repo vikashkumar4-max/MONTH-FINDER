@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
@@ -219,26 +220,25 @@ st.markdown("""
     }
 
     /* MONEY RAIN ANIMATION STYLES */
-    @keyframes fall {
+    @keyframes moneyFall {
         0% {
-            top: -10%;
-            transform: translateX(0) rotate(0deg);
+            top: -10px;
             opacity: 1;
+            transform: translateY(0) rotate(0deg);
         }
         100% {
-            top: 100%;
-            transform: translateX(100px) rotate(360deg);
+            top: 100vh;
             opacity: 0;
+            transform: translateY(100vh) rotate(360deg);
         }
     }
 
     .money-particle {
         position: fixed;
-        top: -10%;
-        font-size: 2.2rem;
         z-index: 99999;
+        font-size: 2.2rem;
         pointer-events: none;
-        animation: fall 3s linear forwards;
+        animation: moneyFall 3s linear forwards;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -257,10 +257,9 @@ def show_error_popup():
         st.rerun()
 
 # Main Title
-st.title("🪙Topup Calendar")
+st.title("🪙 Topup Calendar")
 
-# 🌟 CLASSIC NAME BADGE (OPTION 1 - Top Subtitle)
-# अपना नाम नीचे बदलें:
+# CLASSIC NAME BADGE
 st.markdown('<div class="creator-subtitle"> Avoid Salary Cuts With Smart Calendar Tracking </div>', unsafe_allow_html=True)
 
 # Input Field
@@ -338,7 +337,7 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # Details Box
+    # Details Box & Money Shower
     if total_days_diff >= 0:
         st.success(f"""
         🫵🏻 **Result Details:**
@@ -348,67 +347,28 @@ else:
         * **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
         """)
         
-        # 💸 MONEY SHOWER BUTTON
-        if import streamlit as st
-import streamlit.components.v1 as components
+        # 💸 WORKING MONEY SHOWER BUTTON
+        if st.button("💸 Shower Money"):
+            components.html("""
+                <script>
+                const emojis = ['💵', '💸', '💶', '🪙'];
+                const parentDoc = window.parent.document;
+                
+                for (let i = 0; i < 40; i++) {
+                    let particle = parentDoc.createElement('div');
+                    particle.className = 'money-particle';
+                    particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                    particle.style.left = Math.random() * 95 + 'vw';
+                    particle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                    particle.style.animationDelay = (Math.random() * 0.8) + 's';
+                    
+                    parentDoc.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 4000);
+                }
+                </script>
+            """, height=0)
+    else:
+        st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
 
-# 1. Pehle CSS Inject karein (taaki money particles animation chal sakein)
-st.markdown("""
-<style>
-@keyframes moneyFall {
-    0% {
-        top: -10px;
-        opacity: 1;
-        transform: translateY(0) rotate(0deg);
-    }
-    100% {
-        top: 100vh;
-        opacity: 0;
-        transform: translateY(100vh) rotate(360deg);
-    }
-}
-
-.money-particle {
-    position: fixed;
-    z-index: 9999;
-    font-size: 2rem;
-    pointer-events: none;
-    animation-name: moneyFall;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# 2. Button Click Handler
-if st.button("💸 Shower Money"):
-    # st.markdown ki jagah components.html use karein
-    components.html("""
-        <script>
-        const emojis = ['💵', '💸', '💶', '🪙'];
-        // window.parent.document ka use karna zaruri hai iframe se bahar nikalne ke liye
-        const parentDoc = window.parent.document;
-        
-        for (let i = 0; i < 40; i++) {
-            let particle = parentDoc.createElement('div');
-            particle.className = 'money-particle';
-            particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            particle.style.left = Math.random() * 95 + 'vw';
-            particle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
-            particle.style.animationDelay = (Math.random() * 0.8) + 's';
-            
-            parentDoc.body.appendChild(particle);
-            
-            // 4 seconds ke baad cleanup
-            setTimeout(() => particle.remove(), 4000);
-        }
-        </script>
-    """, height=0)  # height=0 rakha hai taaki iframe hide rahe
-
-else:
-    # Aapka baaki condition logic
-    total_days_diff = -5 # Example
-    st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
-
-    # 🌟 CLASSIC FOOTER SIGNATURE (OPTION 2 - Bottom Footer)
+    # FOOTER SIGNATURE
     st.markdown('<div class="guru-line">| Crafted by <b>Mratyunjay Brahmavanshi</b></div>', unsafe_allow_html=True)
