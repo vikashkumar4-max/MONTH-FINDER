@@ -11,7 +11,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Next-Level Polished Executive CSS (Same Classic Layout, Superior Finish)
+# Initialize Session State for Duration (So bottom selector updates top cards instantly)
+if "duration_choice" not in st.session_state:
+    st.session_state.duration_choice = "2 Years"
+
+# 2. Refined & Polished Executive CSS
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -55,68 +59,6 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 1.8px;
         margin-bottom: 24px;
-    }
-
-    /* Centered Duration Pill Selector (100% Centered & No Red Border) */
-    div[data-testid="stRadio"] {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        margin-bottom: 14px !important;
-    }
-
-    div[data-testid="stRadio"] > label {
-        color: #475569 !important;
-        font-size: 0.72rem !important;
-        font-weight: 800 !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 8px !important;
-        text-align: center !important;
-    }
-
-    div[data-testid="stRadio"] > div[role="radiogroup"] {
-        background: #E2E8F0 !important;
-        padding: 4px !important;
-        border-radius: 12px !important;
-        border: 1px solid #CBD5E1 !important;
-        box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.08) !important;
-        display: inline-flex !important;
-        gap: 4px !important;
-    }
-
-    div[data-testid="stRadio"] > div[role="radiogroup"] > label {
-        background: transparent !important;
-        padding: 7px 26px !important;
-        border-radius: 9px !important;
-        margin: 0 !important;
-        cursor: pointer !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        border: none !important;
-    }
-
-    /* Hide default radio circle */
-    div[data-testid="stRadio"] > div[role="radiogroup"] > label > div:first-child {
-        display: none !important;
-    }
-
-    /* Unselected text */
-    div[data-testid="stRadio"] > div[role="radiogroup"] > label p {
-        font-size: 0.86rem !important;
-        font-weight: 700 !important;
-        color: #475569 !important;
-        margin: 0 !important;
-    }
-
-    /* Selected Pill Style */
-    div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) {
-        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important;
-        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22) !important;
-    }
-
-    div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) p {
-        color: #FFFFFF !important;
     }
 
     /* Input Label */
@@ -248,6 +190,7 @@ st.markdown("""
         color: #1E293B !important;
         box-shadow: 0 6px 20px -4px rgba(15, 23, 42, 0.05) !important;
         padding: 20px 22px !important;
+        margin-bottom: 18px !important;
     }
 
     div[data-testid="stAlert"] p, div[data-testid="stAlert"] li {
@@ -265,13 +208,129 @@ st.markdown("""
         border: 1px solid #CBD5E1 !important;
     }
 
+    /* ============================================================
+       PREMIUM YEAR SELECTION CARD (BELOW RESULT DETAILS)
+       ============================================================ */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 18px !important;
+        padding: 20px 24px !important;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03) !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+        margin-top: 8px !important;
+    }
+
+    div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+        transform: translateY(-2px) !important;
+        border-color: #94A3B8 !important;
+        box-shadow: 0 16px 32px -6px rgba(15, 23, 42, 0.1) !important;
+    }
+
+    .year-card-header {
+        text-align: center;
+        margin-bottom: 14px;
+    }
+
+    .year-card-title {
+        font-size: 0.78rem;
+        font-weight: 800;
+        color: #0F172A;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .year-card-sub {
+        font-size: 0.75rem;
+        color: #64748B;
+        font-weight: 500;
+        margin-top: 2px;
+    }
+
+    /* Premium Pill Buttons inside the Year Card */
+    div[data-testid="stRadio"] {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    div[data-testid="stRadio"] > div[role="radiogroup"] {
+        background: #E2E8F0 !important;
+        padding: 5px !important;
+        border-radius: 14px !important;
+        border: 1px solid #CBD5E1 !important;
+        box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.08) !important;
+        display: inline-flex !important;
+        gap: 6px !important;
+    }
+
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label {
+        background: transparent !important;
+        padding: 10px 34px !important;
+        border-radius: 10px !important;
+        margin: 0 !important;
+        cursor: pointer !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        border: 1px solid transparent !important;
+    }
+
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label:hover {
+        background: rgba(255, 255, 255, 0.55) !important;
+    }
+
+    /* Hide default radio circle */
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label > div:first-child {
+        display: none !important;
+    }
+
+    /* Unselected text */
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label p {
+        font-size: 0.92rem !important;
+        font-weight: 700 !important;
+        color: #475569 !important;
+        margin: 0 !important;
+        transition: color 0.2s ease !important;
+    }
+
+    /* Active / Selected Pill Glow Effect */
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important;
+        border: 1px solid #38BDF8 !important;
+        box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.3), 0 0 0 3px rgba(56, 189, 248, 0.18) !important;
+        transform: scale(1.02) !important;
+    }
+
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) p {
+        color: #FFFFFF !important;
+        letter-spacing: 0.3px !important;
+    }
+
+    .active-mode-badge {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #0284C7;
+        background: #F0F9FF;
+        border: 1px solid #BAE6FD;
+        padding: 4px 12px;
+        border-radius: 999px;
+        display: inline-block;
+    }
+
     /* Crisp Signature Footer */
     .guru-line {
         text-align: center;
         font-size: 0.84rem;
         font-weight: 600;
         color: #64748B;
-        margin-top: 24px;
+        margin-top: 22px;
         padding: 12px 16px;
         border-radius: 12px;
         background: #FFFFFF;
@@ -316,17 +375,7 @@ def show_error_popup():
 st.title("🪙 Topup Calendar")
 st.markdown('<div class="creator-subtitle">Avoid Salary Cuts With Smart Calendar Tracking</div>', unsafe_allow_html=True)
 
-# 4. Centered Duration Selector (Guaranteed Center Alignment)
-duration_choice = st.radio(
-    "⏳ Select  Duration",
-    options=["1 Year", "2 Years"],
-    index=1,
-    horizontal=True
-)
-
-selected_years = 1 if duration_choice == "1 Year" else 2
-
-# 5. Date Input Field
+# 4. Date Input Field (At the Top)
 user_date_str = st.text_input(
     "📌 Plan Expire At:", 
     value="16-07-2027", 
@@ -341,6 +390,10 @@ if clean_str:
         input_date = parser.parse(clean_str, dayfirst=True).date()
     except (ValueError, OverflowError):
         input_date = None
+
+# Read current selection from session state
+current_duration = st.session_state.duration_choice
+selected_years = 1 if current_duration == "1 Year" else 2
 
 today = date.today()
 target_date = today + relativedelta(years=selected_years)
@@ -371,11 +424,11 @@ else:
 
     st.write("---")
 
-    # Metric Cards Layout (Your Exact 4 Cards)
+    # Metric Cards Layout
     st.markdown(f"""
     <div class="metric-container">
         <div class="metric-card card-till-then">
-            <div class="metric-title">Till Then ({duration_choice})</div>
+            <div class="metric-title">Till Then ({current_duration})</div>
             <div class="metric-val">{target_date.strftime('%d-%b-%Y')}</div>
         </div>
         <div class="metric-card card-total-days">
@@ -393,17 +446,42 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # Details Box (Your Exact Structure)
+    # Details Box
     if total_days_diff >= 0:
         st.success(f"""
         🫵🏻 **Result Details:**
 - **Selected Date:** `{input_date.strftime('%d-%b-%Y')}`
-- **Target Date ({duration_choice}):** `{target_date.strftime('%d-%b-%Y')}`
+- **Target Date ({current_duration}):** `{target_date.strftime('%d-%b-%Y')}`
 - **Exact Time Remaining:** **{months_remaining} Months & {days_remaining} Days** (Total: **{total_days_diff} Days**)
 - **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
         """)
     else:
-        st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date ({duration_choice})!")
+        st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date ({current_duration})!")
+
+    # ============================================================
+    # 5. PREMIUM YEAR SELECTION CARD (BELOW RESULT DETAILS)
+    # ============================================================
+    with st.container(border=True):
+        st.markdown("""
+            <div class="year-card-header">
+                <div class="year-card-title">⏳ Target Validity Horizon</div>
+                <div class="year-card-sub">Switch duration to recalculate topup instantly</div>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.radio(
+            "Select Duration",
+            options=["1 Year", "2 Years"],
+            key="duration_choice",
+            horizontal=True,
+            label_visibility="collapsed"
+        )
+        
+        st.markdown(f"""
+            <div style="text-align: center;">
+                <span class="active-mode-badge">● Active Target: {st.session_state.duration_choice} ({target_date.strftime('%d-%b-%Y')})</span>
+            </div>
+        """, unsafe_allow_html=True)
 
     # FOOTER SIGNATURE
     st.markdown('<div class="guru-line">| Crafted by <b>Mratyunjay Brahmavanshi</b></div>', unsafe_allow_html=True)
