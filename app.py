@@ -318,9 +318,9 @@ st.markdown('<div class="creator-subtitle">Avoid Salary Cuts With Smart Calendar
 
 # 4. Centered Duration Selector (Guaranteed Center Alignment)
 duration_choice = st.radio(
-    "⏳ Select Target Duration",
+    "⏳ Select  Duration",
     options=["1 Year", "2 Years"],
-    index=1,
+    index=2,
     horizontal=True
 )
 
