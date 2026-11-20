@@ -1,17 +1,17 @@
 import streamlit as st
-from datetime import datetime, date
+from datetime import date
 from dateutil.relativedelta import relativedelta
 from dateutil import parser
 
 # 1. Page Config
 st.set_page_config(
     page_title="PAPA CALENDAR",
-    page_icon="👨🏻‍🦰",
+    page_icon="🪙",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# 2. Refined & Polished Executive CSS (Centered Year Toggle)
+# 2. Next-Level Polished Executive CSS (Same Classic Layout, Superior Finish)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -20,9 +20,9 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
-    /* Clean Subtle Background */
+    /* Soft Premium Canvas Background */
     .stApp {
-        background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+        background: radial-gradient(circle at 50% 0%, #FFFFFF 0%, #F1F5F9 100%);
         color: #0F172A;
     }
 
@@ -30,175 +30,203 @@ st.markdown("""
         display: none !important;
     }
 
-    /* Title Styling */
+    .block-container {
+        padding-top: 2.2rem !important;
+        padding-bottom: 2.5rem !important;
+        max-width: 680px !important;
+    }
+
+    /* Main Title */
     h1 {
         color: #0F172A !important;
         font-weight: 800 !important;
-        letter-spacing: -0.6px;
+        letter-spacing: -0.7px;
         text-align: center;
-        font-size: 1.95rem !important;
+        font-size: 2rem !important;
         margin-bottom: 4px !important;
     }
 
     /* Subtitle Badge */
     .creator-subtitle {
         text-align: center;
-        font-size: 0.76rem;
+        font-size: 0.74rem;
         font-weight: 700;
         color: #64748B;
         text-transform: uppercase;
-        letter-spacing: 1.6px;
+        letter-spacing: 1.8px;
         margin-bottom: 24px;
     }
 
-    /* Input Labels */
-    label {
+    /* Centered Duration Pill Selector (100% Centered & No Red Border) */
+    div[data-testid="stRadio"] {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-bottom: 14px !important;
+    }
+
+    div[data-testid="stRadio"] > label {
+        color: #475569 !important;
+        font-size: 0.72rem !important;
+        font-weight: 800 !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px !important;
+        text-align: center !important;
+    }
+
+    div[data-testid="stRadio"] > div[role="radiogroup"] {
+        background: #E2E8F0 !important;
+        padding: 4px !important;
+        border-radius: 12px !important;
+        border: 1px solid #CBD5E1 !important;
+        box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.08) !important;
+        display: inline-flex !important;
+        gap: 4px !important;
+    }
+
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label {
+        background: transparent !important;
+        padding: 7px 26px !important;
+        border-radius: 9px !important;
+        margin: 0 !important;
+        cursor: pointer !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        border: none !important;
+    }
+
+    /* Hide default radio circle */
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label > div:first-child {
+        display: none !important;
+    }
+
+    /* Unselected text */
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label p {
+        font-size: 0.86rem !important;
+        font-weight: 700 !important;
+        color: #475569 !important;
+        margin: 0 !important;
+    }
+
+    /* Selected Pill Style */
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) {
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22) !important;
+    }
+
+    div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) p {
+        color: #FFFFFF !important;
+    }
+
+    /* Input Label */
+    div[data-testid="stTextInput"] label {
         color: #475569 !important;
         font-size: 0.74rem !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         text-transform: uppercase;
         letter-spacing: 0.8px;
         margin-bottom: 6px !important;
     }
 
-    /* Center Align the Year Toggle Section */
-    div[data-testid="stSegmentedControl"] {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        margin: 0 auto 16px auto !important;
-        width: 100% !important;
-    }
-
-    div[data-testid="stSegmentedControl"] > label {
-        text-align: center !important;
-        justify-content: center !important;
-        width: 100% !important;
-    }
-
-    div[data-testid="stSegmentedControl"] > div[role="radiogroup"] {
-        background: #E2E8F0 !important;
-        padding: 4px !important;
-        border-radius: 12px !important;
-        border: 1px solid #CBD5E1 !important;
-        box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06) !important;
-        display: inline-flex !important;
-        justify-content: center !important;
-    }
-
-    div[data-testid="stSegmentedControl"] button {
-        border-radius: 9px !important;
-        font-weight: 700 !important;
-        font-size: 0.85rem !important;
-        border: none !important;
-        padding: 6px 24px !important;
-        transition: all 0.2s ease !important;
-    }
-
-    div[data-testid="stSegmentedControl"] button[aria-checked="true"] {
-        background: #0F172A !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2) !important;
-    }
-
-    div[data-testid="stSegmentedControl"] button[aria-checked="false"] {
-        color: #475569 !important;
-        background: transparent !important;
-    }
-
-    /* Date Input Box */
+    /* Sleek Input Box */
     div[data-baseweb="input"] {
         border-radius: 12px !important;
         border: 1.5px solid #CBD5E1 !important;
         background: #FFFFFF !important;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04) !important;
         transition: all 0.2s ease !important;
     }
     
     div[data-baseweb="input"] input {
         color: #0F172A !important;
         font-weight: 700 !important;
-        font-size: 1rem !important;
-        padding: 10px 14px !important;
+        font-size: 1.02rem !important;
+        padding: 11px 16px !important;
+        letter-spacing: 0.3px;
     }
 
     div[data-baseweb="input"]:focus-within {
         border-color: #0F172A !important;
-        box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08) !important;
+        box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.06) !important;
     }
 
-    /* Divider Line */
+    /* Clean Divider */
     hr {
         border: none !important;
         border-top: 1px solid #E2E8F0 !important;
         margin: 22px 0 !important;
     }
 
-    /* Metric Cards Grid Layout */
+    /* 4 Metric Cards Grid */
     .metric-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
         margin: 20px 0;
     }
 
-    /* Enhanced Card Style */
+    @media (max-width: 600px) {
+        .metric-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
     .metric-card {
-        padding: 22px 14px;
-        border-radius: 14px;
+        padding: 20px 12px;
+        border-radius: 16px;
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
         text-align: center;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 6px 16px -4px rgba(15, 23, 42, 0.05);
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
     }
 
     .metric-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.1);
+        transform: translateY(-4px);
+        box-shadow: 0 14px 26px -6px rgba(15, 23, 42, 0.12);
     }
 
-    /* Card 1: Blue */
+    /* Card 1: Royal Blue */
     .card-till-then { 
         border-top: 4px solid #2563EB; 
-        background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 35%);
+        background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 42%);
     }
     .card-till-then .metric-title { color: #2563EB; }
     .card-till-then .metric-val { color: #1E3A8A; }
 
-    /* Card 2: Amber */
+    /* Card 2: Warm Amber */
     .card-total-days { 
-        border-top: 4px solid #D97706; 
-        background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 35%);
+        border-top: 4px solid #F59E0B; 
+        background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 42%);
     }
     .card-total-days .metric-title { color: #D97706; }
     .card-total-days .metric-val { color: #78350F; }
 
-    /* Card 3: Emerald */
+    /* Card 3: Emerald Green */
     .card-topup-month { 
-        border-top: 4px solid #059669; 
-        background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 35%);
+        border-top: 4px solid #10B981; 
+        background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 42%);
     }
     .card-topup-month .metric-title { color: #059669; }
     .card-topup-month .metric-val { color: #064E3B; }
 
-    /* Card 4: Rich Obsidian Highlight */
+    /* Card 4: Obsidian Spotlight Card */
     .card-rounded-month {
         background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%) !important;
         border: 1px solid #334155 !important;
         border-top: 4px solid #38BDF8 !important;
-        box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.25) !important;
+        box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.28) !important;
     }
     .card-rounded-month .metric-title { color: #94A3B8 !important; }
-    .card-rounded-month .metric-val { color: #FFFFFF !important; font-size: 1.3rem !important; }
+    .card-rounded-month .metric-val { color: #FFFFFF !important; font-size: 1.32rem !important; }
 
     .card-rounded-month:hover {
-        box-shadow: 0 14px 28px -4px rgba(15, 23, 42, 0.35) !important;
+        box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.38) !important;
     }
 
     .metric-title {
-        font-size: 0.68rem;
+        font-size: 0.66rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.8px;
@@ -206,49 +234,49 @@ st.markdown("""
     }
 
     .metric-val {
-        font-size: 1.2rem;
+        font-size: 1.18rem;
         font-weight: 800;
         letter-spacing: -0.3px;
     }
 
-    /* Polished Result Box */
+    /* Refined Result Details Box */
     div[data-testid="stAlert"] {
         background: #FFFFFF !important;
-        border: 1px solid #CBD5E1 !important;
-        border-left: 5px solid #059669 !important;
-        border-radius: 14px !important;
+        border: 1px solid #E2E8F0 !important;
+        border-left: 5px solid #10B981 !important;
+        border-radius: 16px !important;
         color: #1E293B !important;
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04) !important;
-        padding: 18px 20px !important;
+        box-shadow: 0 6px 20px -4px rgba(15, 23, 42, 0.05) !important;
+        padding: 20px 22px !important;
     }
 
     div[data-testid="stAlert"] p, div[data-testid="stAlert"] li {
         color: #334155 !important;
         font-size: 0.92rem !important;
-        line-height: 1.65 !important;
+        line-height: 1.7 !important;
     }
 
     div[data-testid="stAlert"] code {
         background: #F1F5F9 !important;
         color: #0F172A !important;
         font-weight: 700 !important;
-        padding: 2px 7px !important;
+        padding: 3px 8px !important;
         border-radius: 6px !important;
-        border: 1px solid #E2E8F0 !important;
+        border: 1px solid #CBD5E1 !important;
     }
 
-    /* Footer Badge */
+    /* Crisp Signature Footer */
     .guru-line {
         text-align: center;
-        font-size: 0.85rem;
+        font-size: 0.84rem;
         font-weight: 600;
-        color: #475569;
+        color: #64748B;
         margin-top: 24px;
-        padding: 12px;
+        padding: 12px 16px;
         border-radius: 12px;
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
         letter-spacing: 0.3px;
     }
 
@@ -288,16 +316,13 @@ def show_error_popup():
 st.title("🪙 Topup Calendar")
 st.markdown('<div class="creator-subtitle">Avoid Salary Cuts With Smart Calendar Tracking</div>', unsafe_allow_html=True)
 
-# 4. Centered Duration Selector Buttons (Above Date Box)
-duration_choice = st.segmented_control(
-    "⏳ Select Target Duration:",
+# 4. Centered Duration Selector (Guaranteed Center Alignment)
+duration_choice = st.radio(
+    "⏳ Select Target Duration",
     options=["1 Year", "2 Years"],
-    default="2 Years",
-    selection_mode="single"
+    index=1,
+    horizontal=True
 )
-
-if not duration_choice:
-    duration_choice = "2 Years"
 
 selected_years = 1 if duration_choice == "1 Year" else 2
 
@@ -346,7 +371,7 @@ else:
 
     st.write("---")
 
-    # Metric Cards Layout
+    # Metric Cards Layout (Your Exact 4 Cards)
     st.markdown(f"""
     <div class="metric-container">
         <div class="metric-card card-till-then">
@@ -368,7 +393,7 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # Details Box
+    # Details Box (Your Exact Structure)
     if total_days_diff >= 0:
         st.success(f"""
         🫵🏻 **Result Details:**
