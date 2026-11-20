@@ -1,27 +1,28 @@
 import streamlit as st
-from datetime import date
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from dateutil import parser
 
 # 1. Page Config
 st.set_page_config(
-    page_title="Topup Calendar | Validity Calculator",
+    page_title="PAPA CALENDAR",
+    page_icon="👨🏻‍🦰",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# 2. Clean Corporate SaaS CSS (Stripe / Linear Inspired)
+# 2. Refined & Polished Executive CSS (Preserving Your Exact Layout)
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
     * {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
-    /* Crisp Neutral Background */
+    /* Clean Subtle Background */
     .stApp {
-        background-color: #F8FAFC;
+        background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
         color: #0F172A;
     }
 
@@ -29,306 +30,268 @@ st.markdown("""
         display: none !important;
     }
 
-    .block-container {
-        padding-top: 2.5rem !important;
-        padding-bottom: 3rem !important;
-        max-width: 740px !important;
+    /* Title Styling */
+    h1 {
+        color: #0F172A !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.6px;
+        text-align: center;
+        font-size: 1.95rem !important;
+        margin-bottom: 4px !important;
     }
 
-    /* Corporate Header */
-    .corp-header {
-        border-bottom: 1px solid #E2E8F0;
-        padding-bottom: 18px;
-        margin-bottom: 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
-
-    .corp-title {
-        font-size: 1.65rem;
+    /* Subtitle Badge */
+    .creator-subtitle {
+        text-align: center;
+        font-size: 0.76rem;
         font-weight: 700;
-        color: #0F172A;
-        letter-spacing: -0.5px;
-        margin: 0;
-        line-height: 1.2;
-    }
-
-    .corp-subtitle {
-        font-size: 0.85rem;
         color: #64748B;
-        margin-top: 4px;
-        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 1.6px;
+        margin-bottom: 26px;
     }
 
-    .corp-date-badge {
-        font-family: 'JetBrains Mono', monospace !important;
-        font-size: 0.78rem;
-        color: #475569;
-        background: #FFFFFF;
-        border: 1px solid #CBD5E1;
-        padding: 5px 10px;
-        border-radius: 6px;
-        font-weight: 500;
-    }
-
-    /* Input Container */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        background-color: #FFFFFF !important;
-        border: 1px solid #E2E8F0 !important;
-        border-radius: 10px !important;
-        padding: 20px !important;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
-    }
-
+    /* Input Labels */
     label {
-        color: #334155 !important;
-        font-size: 0.78rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.2px;
+        color: #475569 !important;
+        font-size: 0.74rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
         margin-bottom: 6px !important;
     }
 
-    /* Segmented Control (Clean Neutral Style) */
+    /* Segmented Control (Matches Dark Theme Instead of Red) */
     div[data-testid="stSegmentedControl"] {
-        background-color: #F1F5F9 !important;
-        padding: 3px !important;
-        border-radius: 8px !important;
-        border: 1px solid #E2E8F0 !important;
+        background: #E2E8F0 !important;
+        padding: 4px !important;
+        border-radius: 12px !important;
+        border: 1px solid #CBD5E1 !important;
+        margin-bottom: 10px !important;
+        box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06) !important;
     }
 
     div[data-testid="stSegmentedControl"] button {
-        border-radius: 6px !important;
-        font-weight: 600 !important;
-        font-size: 0.84rem !important;
+        border-radius: 9px !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
         border: none !important;
-        padding: 6px 14px !important;
-        transition: all 0.15s ease !important;
+        padding: 6px 18px !important;
+        transition: all 0.2s ease !important;
     }
 
     div[data-testid="stSegmentedControl"] button[aria-checked="true"] {
-        background-color: #0F172A !important;
+        background: #0F172A !important;
         color: #FFFFFF !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2) !important;
     }
 
     div[data-testid="stSegmentedControl"] button[aria-checked="false"] {
         color: #475569 !important;
-        background-color: transparent !important;
+        background: transparent !important;
     }
 
-    /* Input Field */
+    /* Date Input Box */
     div[data-baseweb="input"] {
-        border-radius: 8px !important;
-        border: 1px solid #CBD5E1 !important;
-        background-color: #FFFFFF !important;
-        transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+        border-radius: 12px !important;
+        border: 1.5px solid #CBD5E1 !important;
+        background: #FFFFFF !important;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+        transition: all 0.2s ease !important;
     }
     
     div[data-baseweb="input"] input {
-        font-family: 'JetBrains Mono', monospace !important;
         color: #0F172A !important;
-        font-weight: 600 !important;
-        font-size: 0.95rem !important;
-        padding: 9px 12px !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        padding: 10px 14px !important;
     }
 
     div[data-baseweb="input"]:focus-within {
-        border-color: #2563EB !important;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+        border-color: #0F172A !important;
+        box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08) !important;
     }
 
-    /* 4-Column Standard KPI Grid */
-    .kpi-grid {
+    /* Divider Line */
+    hr {
+        border: none !important;
+        border-top: 1px solid #E2E8F0 !important;
+        margin: 22px 0 !important;
+    }
+
+    /* Metric Cards Grid Layout */
+    .metric-container {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
         gap: 14px;
         margin: 20px 0;
     }
 
-    @media (max-width: 640px) {
-        .kpi-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        .corp-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-    }
-
-    .kpi-card {
+    /* Enhanced Card Style */
+    .metric-card {
+        padding: 22px 14px;
+        border-radius: 14px;
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
-        border-radius: 10px;
-        padding: 16px 18px;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .kpi-label {
-        font-size: 0.72rem;
-        font-weight: 600;
-        color: #64748B;
+    .metric-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.1);
+    }
+
+    /* Card 1: Blue */
+    .card-till-then { 
+        border-top: 4px solid #2563EB; 
+        background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 35%);
+    }
+    .card-till-then .metric-title { color: #2563EB; }
+    .card-till-then .metric-val { color: #1E3A8A; }
+
+    /* Card 2: Amber */
+    .card-total-days { 
+        border-top: 4px solid #D97706; 
+        background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 35%);
+    }
+    .card-total-days .metric-title { color: #D97706; }
+    .card-total-days .metric-val { color: #78350F; }
+
+    /* Card 3: Emerald */
+    .card-topup-month { 
+        border-top: 4px solid #059669; 
+        background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 35%);
+    }
+    .card-topup-month .metric-title { color: #059669; }
+    .card-topup-month .metric-val { color: #064E3B; }
+
+    /* Card 4: Rich Obsidian Highlight */
+    .card-rounded-month {
+        background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%) !important;
+        border: 1px solid #334155 !important;
+        border-top: 4px solid #38BDF8 !important;
+        box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.25) !important;
+    }
+    .card-rounded-month .metric-title { color: #94A3B8 !important; }
+    .card-rounded-month .metric-val { color: #FFFFFF !important; font-size: 1.3rem !important; }
+
+    .card-rounded-month:hover {
+        box-shadow: 0 14px 28px -4px rgba(15, 23, 42, 0.35) !important;
+    }
+
+    .metric-title {
+        font-size: 0.68rem;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.8px;
         margin-bottom: 8px;
     }
 
-    .kpi-value {
-        font-family: 'JetBrains Mono', monospace !important;
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #0F172A;
-        letter-spacing: -0.4px;
+    .metric-val {
+        font-size: 1.2rem;
+        font-weight: 800;
+        letter-spacing: -0.3px;
     }
 
-    .kpi-sub {
-        font-size: 0.72rem;
-        color: #94A3B8;
-        margin-top: 4px;
+    /* Polished Result Box (Same Structure, Better Look) */
+    div[data-testid="stAlert"] {
+        background: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-left: 5px solid #059669 !important;
+        border-radius: 14px !important;
+        color: #1E293B !important;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04) !important;
+        padding: 18px 20px !important;
     }
 
-    /* Primary Highlighted KPI Card */
-    .kpi-primary {
-        background: #0F172A;
-        border: 1px solid #0F172A;
+    div[data-testid="stAlert"] p, div[data-testid="stAlert"] li {
+        color: #334155 !important;
+        font-size: 0.92rem !important;
+        line-height: 1.65 !important;
     }
 
-    .kpi-primary .kpi-label {
-        color: #94A3B8;
+    div[data-testid="stAlert"] code {
+        background: #F1F5F9 !important;
+        color: #0F172A !important;
+        font-weight: 700 !important;
+        padding: 2px 7px !important;
+        border-radius: 6px !important;
+        border: 1px solid #E2E8F0 !important;
     }
 
-    .kpi-primary .kpi-value {
-        color: #FFFFFF;
-    }
-
-    .kpi-primary .kpi-sub {
-        color: #38BDF8;
-        font-weight: 500;
-    }
-
-    /* Professional Ledger Table */
-    .report-box {
+    /* Footer Badge */
+    .guru-line {
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #475569;
+        margin-top: 24px;
+        padding: 12px;
+        border-radius: 12px;
         background: #FFFFFF;
         border: 1px solid #E2E8F0;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+        letter-spacing: 0.3px;
+    }
+
+    .guru-line b {
+        color: #0F172A;
+        font-weight: 800;
+    }
+
+    /* Popup Dialog Box */
+    .popup-box {
+        background: #FFFFFF;
+        border: 1px solid #FCA5A5;
+        border-top: 4px solid #DC2626;
+        padding: 18px;
         border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+        text-align: center;
     }
-
-    .report-header {
-        background: #F8FAFC;
-        padding: 12px 20px;
-        border-bottom: 1px solid #E2E8F0;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: #334155;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .badge-compliant {
-        background: #DCFCE7;
-        color: #166534;
-        font-size: 0.7rem;
-        font-weight: 600;
-        padding: 2px 8px;
-        border-radius: 4px;
-        text-transform: none;
-        letter-spacing: 0;
-    }
-
-    .report-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 20px;
-        border-bottom: 1px solid #F1F5F9;
-        font-size: 0.88rem;
-    }
-
-    .report-row:last-child {
-        border-bottom: none;
-        background: #F8FAFC;
-    }
-
-    .r-label {
-        color: #475569;
-        font-weight: 500;
-    }
-
-    .r-val {
-        font-family: 'JetBrains Mono', monospace !important;
-        color: #0F172A;
-        font-weight: 600;
-    }
-
-    .r-val-highlight {
-        font-family: 'JetBrains Mono', monospace !important;
-        color: #1D4ED8;
-        font-weight: 700;
-        font-size: 0.95rem;
-    }
-
-    /* Minimal Footer */
-    .corp-footer {
-        margin-top: 28px;
-        padding-top: 16px;
-        border-top: 1px solid #E2E8F0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.78rem;
-        color: #64748B;
-    }
-
-    .corp-footer strong {
-        color: #0F172A;
-        font-weight: 600;
-    }
+    .popup-header { font-size: 1.15rem; font-weight: 800; color: #991B1B; margin-bottom: 6px; }
+    .popup-sub { font-size: 0.85rem; font-weight: 500; color: #4B5563; }
     </style>
 """, unsafe_allow_html=True)
 
-today = date.today()
-
-# 3. Corporate Header
-st.markdown(f"""
-    <div class="corp-header">
-        <div>
-            <h1 class="corp-title">Topup Calendar</h1>
-            <div class="corp-subtitle">Subscription Validity & Compliance Calculator</div>
+# 3. Native Streamlit Popup Dialog
+@st.dialog("🚨 Warning!")
+def show_error_popup():
+    st.markdown("""
+        <div class="popup-box">
+            <div class="popup-header">Are Malik wo zara si galti ho gyi! 👏🤡</div>
+            <div class="popup-sub">"अबे DATE सही डालो भाई!" </div>
         </div>
-        <div class="corp-date-badge">Base Date: {today.strftime('%d %b %Y')}</div>
-    </div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+    st.write("")
+    if st.button("Sorry 🙏🏻 (close)", use_container_width=True):
+        st.rerun()
 
-# 4. Control Panel
-with st.container(border=True):
-    col1, col2 = st.columns([1, 1.5], vertical_alignment="bottom")
-    
-    with col1:
-        duration_choice = st.segmented_control(
-            "Target Duration",
-            options=["1 Year", "2 Years"],
-            default="2 Years",
-            selection_mode="single"
-        )
-        if not duration_choice:
-            duration_choice = "2 Years"
+# Main Title
+st.title("🪙 Topup Calendar")
+st.markdown('<div class="creator-subtitle">Avoid Salary Cuts With Smart Calendar Tracking</div>', unsafe_allow_html=True)
 
-    with col2:
-        user_date_str = st.text_input(
-            "Current Plan Expiry Date", 
-            value="16-07-2027", 
-            help="Accepted formats: DD-MM-YYYY, YYYY/MM/DD, DD MMM YYYY"
-        )
+# 4. Duration Selector Buttons (Above Date Box)
+duration_choice = st.segmented_control(
+    "⏳ Select Target Duration:",
+    options=["1 Year", "2 Years"],
+    default="2 Years",
+    selection_mode="single"
+)
+
+if not duration_choice:
+    duration_choice = "2 Years"
 
 selected_years = 1 if duration_choice == "1 Year" else 2
 
-# Date Parsing
+# 5. Date Input Field
+user_date_str = st.text_input(
+    "📌 Plan Expire At:", 
+    value="16-07-2027", 
+    help="You can paste any format e.g. 16-07-2027, 2027/07/16, 16 Jul 2027"
+)
+
 input_date = None
 clean_str = user_date_str.strip()
 
@@ -338,13 +301,15 @@ if clean_str:
     except (ValueError, OverflowError):
         input_date = None
 
+today = date.today()
 target_date = today + relativedelta(years=selected_years)
 
-# 5. Calculations & Output
+# Calculation & Logic Handling
 if not clean_str:
-    st.info("Please enter a valid plan expiry date above to calculate required topup.")
+    st.info("👆 कृपया ऊपर बॉक्स में प्लान की एक्सपायरी डेट डालें।")
 elif input_date is None:
-    st.error("Invalid date format. Please enter a standard date (e.g., 16-07-2027 or 16 Jul 2027).")
+    show_error_popup()
+    st.error("🚨 Please paste date carefully 100% SALARY CUT CHANCE AVAILABLE ")
 else:
     total_days_diff = (target_date - input_date).days
     
@@ -360,73 +325,44 @@ else:
         diff = relativedelta(input_date, target_date)
         months_over = diff.years * 12 + diff.months
         days_over = diff.days
-        display_month_str = f"-{months_over}M {days_over}D"
-        rounded_month_str = "0 Months"
+        display_month_str = f"-({months_over}M {days_over}D)"
+        rounded_month_str = "N/A"
 
-    # 4-Column KPI Grid
+    st.write("---")
+
+    # Metric Cards Layout (Your Exact 4 Cards)
     st.markdown(f"""
-    <div class="kpi-grid">
-        <div class="kpi-card">
-            <div class="kpi-label">Target Date</div>
-            <div class="kpi-value">{target_date.strftime('%d %b %y')}</div>
-            <div class="kpi-sub">{duration_choice} horizon</div>
+    <div class="metric-container">
+        <div class="metric-card card-till-then">
+            <div class="metric-title">Till Then ({duration_choice})</div>
+            <div class="metric-val">{target_date.strftime('%d-%b-%Y')}</div>
         </div>
-        <div class="kpi-card">
-            <div class="kpi-label">Total Gap</div>
-            <div class="kpi-value">{total_days_diff}d</div>
-            <div class="kpi-sub">Calendar days</div>
+        <div class="metric-card card-total-days">
+            <div class="metric-title">Total Days</div>
+            <div class="metric-val">{total_days_diff} Days</div>
         </div>
-        <div class="kpi-card">
-            <div class="kpi-label">Exact Shortfall</div>
-            <div class="kpi-value">{display_month_str}</div>
-            <div class="kpi-sub">Months & days</div>
+        <div class="metric-card card-topup-month">
+            <div class="metric-title">Exact Topup</div>
+            <div class="metric-val">{display_month_str}</div>
         </div>
-        <div class="kpi-card kpi-primary">
-            <div class="kpi-label">Required Topup</div>
-            <div class="kpi-value">{rounded_month_str}</div>
-            <div class="kpi-sub">Rounded full months</div>
+        <div class="metric-card card-rounded-month">
+            <div class="metric-title">Full Topup</div>
+            <div class="metric-val">{rounded_month_str}</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Structured Calculation Report
+    # Details Box (Your Exact Structure)
     if total_days_diff >= 0:
-        rounding_note = f"+1 month added for {days_remaining} extra days" if days_remaining > 0 else "Exact month match (no buffer needed)"
-        st.markdown(f"""
-        <div class="report-box">
-            <div class="report-header">
-                <span>Calculation Summary</span>
-                <span class="badge-compliant">Action Required</span>
-            </div>
-            <div class="report-row">
-                <span class="r-label">Current Expiry Date</span>
-                <span class="r-val">{input_date.strftime('%d-%b-%Y')}</span>
-            </div>
-            <div class="report-row">
-                <span class="r-label">Target Benchmark ({duration_choice})</span>
-                <span class="r-val">{target_date.strftime('%d-%b-%Y')}</span>
-            </div>
-            <div class="report-row">
-                <span class="r-label">Exact Duration Gap</span>
-                <span class="r-val">{months_remaining} Months, {days_remaining} Days ({total_days_diff} Days)</span>
-            </div>
-            <div class="report-row">
-                <span class="r-label">Rounding Policy</span>
-                <span class="r-val">{rounding_note}</span>
-            </div>
-            <div class="report-row">
-                <span class="r-label"><strong>Final Topup Allocation</strong></span>
-                <span class="r-val-highlight">{final_rounded_months} Full Months</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.success(f"""
+        🫵🏻 **Result Details:**
+- **Selected Date:** `{input_date.strftime('%d-%b-%Y')}`
+- **Target Date ({duration_choice}):** `{target_date.strftime('%d-%b-%Y')}`
+- **Exact Time Remaining:** **{months_remaining} Months & {days_remaining} Days** (Total: **{total_days_diff} Days**)
+- **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
+        """)
     else:
-        st.warning(f"Current plan validity exceeds the {duration_choice} target date by {abs(total_days_diff)} days. No additional topup is required.")
+        st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date ({duration_choice})!")
 
-    # Corporate Footer
-    st.markdown("""
-        <div class="corp-footer">
-            <span>Internal Operations Tool</span>
-            <span>Developed by <strong>Mratyunjay Brahmavanshi</strong></span>
-        </div>
-    """, unsafe_allow_html=True)
+    # FOOTER SIGNATURE
+    st.markdown('<div class="guru-line">| Crafted by <b>Mratyunjay Brahmavanshi</b></div>', unsafe_allow_html=True)
