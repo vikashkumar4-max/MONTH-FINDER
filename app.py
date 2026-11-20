@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Refined & Polished Executive CSS (Preserving Your Exact Layout)
+# 2. Refined & Polished Executive CSS (Centered Year Toggle)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -48,7 +48,7 @@ st.markdown("""
         color: #64748B;
         text-transform: uppercase;
         letter-spacing: 1.6px;
-        margin-bottom: 26px;
+        margin-bottom: 24px;
     }
 
     /* Input Labels */
@@ -61,14 +61,30 @@ st.markdown("""
         margin-bottom: 6px !important;
     }
 
-    /* Segmented Control (Matches Dark Theme Instead of Red) */
+    /* Center Align the Year Toggle Section */
     div[data-testid="stSegmentedControl"] {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 auto 16px auto !important;
+        width: 100% !important;
+    }
+
+    div[data-testid="stSegmentedControl"] > label {
+        text-align: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+
+    div[data-testid="stSegmentedControl"] > div[role="radiogroup"] {
         background: #E2E8F0 !important;
         padding: 4px !important;
         border-radius: 12px !important;
         border: 1px solid #CBD5E1 !important;
-        margin-bottom: 10px !important;
         box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+        display: inline-flex !important;
+        justify-content: center !important;
     }
 
     div[data-testid="stSegmentedControl"] button {
@@ -76,7 +92,7 @@ st.markdown("""
         font-weight: 700 !important;
         font-size: 0.85rem !important;
         border: none !important;
-        padding: 6px 18px !important;
+        padding: 6px 24px !important;
         transition: all 0.2s ease !important;
     }
 
@@ -195,7 +211,7 @@ st.markdown("""
         letter-spacing: -0.3px;
     }
 
-    /* Polished Result Box (Same Structure, Better Look) */
+    /* Polished Result Box */
     div[data-testid="stAlert"] {
         background: #FFFFFF !important;
         border: 1px solid #CBD5E1 !important;
@@ -272,7 +288,7 @@ def show_error_popup():
 st.title("🪙 Topup Calendar")
 st.markdown('<div class="creator-subtitle">Avoid Salary Cuts With Smart Calendar Tracking</div>', unsafe_allow_html=True)
 
-# 4. Duration Selector Buttons (Above Date Box)
+# 4. Centered Duration Selector Buttons (Above Date Box)
 duration_choice = st.segmented_control(
     "⏳ Select Target Duration:",
     options=["1 Year", "2 Years"],
@@ -330,7 +346,7 @@ else:
 
     st.write("---")
 
-    # Metric Cards Layout (Your Exact 4 Cards)
+    # Metric Cards Layout
     st.markdown(f"""
     <div class="metric-container">
         <div class="metric-card card-till-then">
@@ -352,7 +368,7 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # Details Box (Your Exact Structure)
+    # Details Box
     if total_days_diff >= 0:
         st.success(f"""
         🫵🏻 **Result Details:**
