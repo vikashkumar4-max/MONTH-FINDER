@@ -1,7 +1,7 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
+from dateutil import parser
 
 # 1. Page Config
 st.set_page_config(
@@ -20,18 +20,15 @@ st.markdown("""
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
 
-    /* Subtle Rich Minimal Background */
     .stApp {
         background: #F8FAFC;
         color: #0F172A;
     }
 
-    /* Hide Top Header Toolbar & Footer */
     header[data-testid="stHeader"], #MainMenu, footer {
         display: none !important;
     }
 
-    /* Executive Clean Title */
     h1 {
         color: #0F172A !important;
         font-weight: 800 !important;
@@ -41,7 +38,6 @@ st.markdown("""
         margin-bottom: 4px !important;
     }
 
-    /* Classic Subtitle / Creator Badge */
     .creator-subtitle {
         text-align: center;
         font-size: 0.78rem;
@@ -52,13 +48,20 @@ st.markdown("""
         margin-bottom: 24px;
     }
 
-    /* Premium Input Styling */
     label {
         color: #64748B !important;
         font-size: 0.75rem !important;
         font-weight: 700 !important;
         text-transform: uppercase;
         letter-spacing: 0.8px;
+    }
+
+    /* Segmented Control (1 Year / 2 Years Toggle) Styling */
+    div[data-testid="stSegmentedControl"] {
+        background: #E2E8F0 !important;
+        padding: 4px !important;
+        border-radius: 10px !important;
+        margin-bottom: 12px !important;
     }
 
     div[data-baseweb="input"] {
@@ -88,7 +91,6 @@ st.markdown("""
         margin: 20px 0;
     }
 
-    /* Executive Classic Card Style */
     .metric-card {
         padding: 20px 14px;
         border-radius: 12px;
@@ -99,14 +101,12 @@ st.markdown("""
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    /* Subtle & Professional Hover */
     .metric-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
         border-color: #CBD5E1;
     }
 
-    /* Distinct Executive Card Colors */
     .card-till-then { border-top: 3px solid #2563EB; }
     .card-till-then .metric-title { color: #2563EB; }
     .card-till-then .metric-val { color: #1E3A8A; }
@@ -119,7 +119,6 @@ st.markdown("""
     .card-topup-month .metric-title { color: #059669; }
     .card-topup-month .metric-val { color: #064E3B; }
 
-    /* Rich Obsidian Card (Main Highlight) */
     .card-rounded-month {
         background: #0F172A !important;
         border: 1px solid #1E293B !important;
@@ -147,7 +146,6 @@ st.markdown("""
         letter-spacing: -0.3px;
     }
 
-    /* Result Box (Clean Executive Slate) */
     .stSuccess {
         background: #FFFFFF !important;
         border: 1px solid #E2E8F0 !important;
@@ -158,7 +156,6 @@ st.markdown("""
         padding: 16px !important;
     }
 
-    /* Crisp Minimal Button */
     .stButton>button {
         width: 100%;
         border-radius: 10px !important;
@@ -169,20 +166,8 @@ st.markdown("""
         font-weight: 600 !important;
         font-size: 0.9rem !important;
         transition: all 0.2s ease !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     }
 
-    .stButton>button:hover {
-        background: #1E293B !important;
-        border-color: #1E293B !important;
-        color: #FFFFFF !important;
-    }
-
-    .stButton>button:active {
-        transform: scale(0.99) !important;
-    }
-
-    /* Minimal Tagline Badge */
     .guru-line {
         text-align: center;
         font-size: 0.88rem;
@@ -196,7 +181,6 @@ st.markdown("""
         letter-spacing: 0.3px;
     }
 
-    /* Warning Dialog Box */
     .popup-box {
         background: #FFFFFF;
         border: 1px solid #FCA5A5;
@@ -218,28 +202,6 @@ st.markdown("""
         font-weight: 500;
         color: #4B5563;
     }
-
-    /* MONEY RAIN ANIMATION STYLES */
-    @keyframes moneyFall {
-        0% {
-            top: -10px;
-            opacity: 1;
-            transform: translateY(0) rotate(0deg);
-        }
-        100% {
-            top: 100vh;
-            opacity: 0;
-            transform: translateY(100vh) rotate(360deg);
-        }
-    }
-
-    .money-particle {
-        position: fixed;
-        z-index: 99999;
-        font-size: 2.2rem;
-        pointer-events: none;
-        animation: moneyFall 3s linear forwards;
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -248,7 +210,7 @@ st.markdown("""
 def show_error_popup():
     st.markdown("""
         <div class="popup-box">
-            <div class="popup-header">🦁 वाह मेरे शेर! कर दिया गलत टॉपअप! 👏🤡</div>
+            <div class="popup-header">Are Malik wo zara si galti ho gyi! 👏🤡</div>
             <div class="popup-sub">"अबे DATE सही डालो भाई!" </div>
         </div>
     """, unsafe_allow_html=True)
@@ -258,56 +220,60 @@ def show_error_popup():
 
 # Main Title
 st.title("🪙 Topup Calendar")
-
-# CLASSIC NAME BADGE
 st.markdown('<div class="creator-subtitle"> Avoid Salary Cuts With Smart Calendar Tracking </div>', unsafe_allow_html=True)
 
-# Input Field
+# 4. Duration Selector Buttons (Above Date Box)
+duration_choice = st.segmented_control(
+    "⏳ Select Target Duration:",
+    options=["1 Year", "2 Years"],
+    default="2 Years",
+    selection_mode="single"
+)
+
+# Fallback agar user kisi button ko unselect kar de
+if not duration_choice:
+    duration_choice = "2 Years"
+
+selected_years = 1 if duration_choice == "1 Year" else 2
+
+# 5. Date Input Field
 user_date_str = st.text_input(
     "📌 Plan Expire At:", 
     value="16-07-2027", 
     help="You can paste any format e.g. 16-07-2027, 2027/07/16, 16 Jul 2027"
 )
 
-supported_formats = [
-    "%d-%m-%Y", "%d/%m/%Y", "%Y-%m-%d", "%Y/%m/%d",
-    "%d-%b-%Y", "%d %b %Y", "%d-%B-%Y", "%d %B %Y",
-    "%d.%m.%Y", "%Y.%m.%d"
-]
-
 input_date = None
 clean_str = user_date_str.strip()
 
 if clean_str:
-    for fmt in supported_formats:
-        try:
-            input_date = datetime.strptime(clean_str, fmt).date()
-            break
-        except ValueError:
-            pass
+    try:
+        input_date = parser.parse(clean_str, dayfirst=True).date()
+    except (ValueError, OverflowError):
+        input_date = None
 
 today = date.today()
-two_years_later = today + relativedelta(years=2)
+target_date = today + relativedelta(years=selected_years)
 
 # Calculation & Logic Handling
-if input_date is None:
+if not clean_str:
+    st.info("👆 कृपया ऊपर बॉक्स में प्लान की एक्सपायरी डेट डालें।")
+elif input_date is None:
     show_error_popup()
     st.error("🚨 Please paste date carefully 100% SALARY CUT CHANCE AVAILABLE ")
-
 else:
-    total_days_diff = (two_years_later - input_date).days
+    total_days_diff = (target_date - input_date).days
     
-    if input_date <= two_years_later:
-        diff = relativedelta(two_years_later, input_date)
+    if input_date <= target_date:
+        diff = relativedelta(target_date, input_date)
         months_remaining = diff.years * 12 + diff.months
         days_remaining = diff.days
         display_month_str = f"{months_remaining}M {days_remaining}D"
         
-        # LOGIC: 1 दिन भी एक्स्ट्रा होने पर +1 महीना बढ़ जाएगा
         final_rounded_months = months_remaining + 1 if days_remaining > 0 else months_remaining
         rounded_month_str = f"{final_rounded_months} Months"
     else:
-        diff = relativedelta(input_date, two_years_later)
+        diff = relativedelta(input_date, target_date)
         months_over = diff.years * 12 + diff.months
         days_over = diff.days
         display_month_str = f"-({months_over}M {days_over}D)"
@@ -319,8 +285,8 @@ else:
     st.markdown(f"""
     <div class="metric-container">
         <div class="metric-card card-till-then">
-            <div class="metric-title">Till Then</div>
-            <div class="metric-val">{two_years_later.strftime('%d-%b-%Y')}</div>
+            <div class="metric-title">Till Then ({duration_choice})</div>
+            <div class="metric-val">{target_date.strftime('%d-%b-%Y')}</div>
         </div>
         <div class="metric-card card-total-days">
             <div class="metric-title">Total Days</div>
@@ -337,38 +303,17 @@ else:
     </div>
     """, unsafe_allow_html=True)
 
-    # Details Box & Money Shower
+    # Details Box
     if total_days_diff >= 0:
         st.success(f"""
         🫵🏻 **Result Details:**
-        * **Selected Date:** `{input_date.strftime('%d-%b-%Y')}`
-        * **Given date (2 Years):** `{two_years_later.strftime('%d-%b-%Y')}`
-        * **Exact Time Remaining:** **{months_remaining} Months & {days_remaining} Days** (Total: **{total_days_diff} Days**)
-        * **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
+- **Selected Date:** `{input_date.strftime('%d-%b-%Y')}`
+- **Target Date ({duration_choice}):** `{target_date.strftime('%d-%b-%Y')}`
+- **Exact Time Remaining:** **{months_remaining} Months & {days_remaining} Days** (Total: **{total_days_diff} Days**)
+- **Required Topup (Rounded):** **{final_rounded_months} Full Months** *(Extra {days_remaining} days added as +1 month)*
         """)
-        
-        # 💸 WORKING MONEY SHOWER BUTTON
-        if st.button("💸 Shower Money"):
-            components.html("""
-                <script>
-                const emojis = ['💵', '💸', '💶', '🪙'];
-                const parentDoc = window.parent.document;
-                
-                for (let i = 0; i < 40; i++) {
-                    let particle = parentDoc.createElement('div');
-                    particle.className = 'money-particle';
-                    particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                    particle.style.left = Math.random() * 95 + 'vw';
-                    particle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
-                    particle.style.animationDelay = (Math.random() * 0.8) + 's';
-                    
-                    parentDoc.body.appendChild(particle);
-                    setTimeout(() => particle.remove(), 4000);
-                }
-                </script>
-            """, height=0)
     else:
-        st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date!")
+        st.warning(f"⚠️ Selected date is **{abs(total_days_diff)} days** beyond target date ({duration_choice})!")
 
     # FOOTER SIGNATURE
     st.markdown('<div class="guru-line">| Crafted by <b>Mratyunjay Brahmavanshi</b></div>', unsafe_allow_html=True)
