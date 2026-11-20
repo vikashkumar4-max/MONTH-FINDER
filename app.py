@@ -320,7 +320,7 @@ st.markdown('<div class="creator-subtitle">Avoid Salary Cuts With Smart Calendar
 duration_choice = st.radio(
     "⏳ Select  Duration",
     options=["1 Year", "2 Years"],
-    index=2,
+    index=1,
     horizontal=True
 )
 
